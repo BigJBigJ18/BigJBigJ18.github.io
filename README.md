@@ -1,9 +1,8 @@
-<html lang="de">
-<head>
+<html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Networking Flashcards</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Syne:wght@400;700;800&amp;display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0d0f14;
@@ -493,6 +492,43 @@
   .exam-dot.answered { background: var(--accent2); border-color: var(--accent2); color: #fff; }
   .exam-dot.current { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(79,255,176,0.3); }
 
+  /* Exam matching question UI */
+  .exam-match-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 0; margin-bottom: 0.5rem; }
+  .exam-match-left {
+    font-size: 0.85rem; color: var(--text); background: var(--surface2);
+    border: 1px solid var(--border); border-right: none;
+    border-radius: 6px 0 0 6px; padding: 0.65rem 0.9rem;
+    display: flex; align-items: center;
+  }
+  .exam-match-arrow {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface2); border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted); font-family: 'JetBrains Mono', monospace;
+    padding: 0 0.6rem; font-size: 0.9rem;
+  }
+  .exam-match-select {
+    background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 0 6px 6px 0;
+    padding: 0.55rem 0.7rem; font-family: 'Syne', sans-serif;
+    font-size: 0.85rem; cursor: pointer; width: 100%;
+    transition: all 0.12s; appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+    background-position: calc(100% - 14px) 50%, calc(100% - 9px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2rem;
+  }
+  .exam-match-select:hover { border-color: var(--accent2); }
+  .exam-match-select.has-value { border-color: var(--accent); color: var(--accent); background-color: rgba(79,255,176,0.06); }
+  .exam-match-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent2); margin-bottom: 0.8rem; }
+  @media (max-width: 560px) {
+    .exam-match-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    .exam-match-left { border-right: 1px solid var(--border); border-radius: 6px; }
+    .exam-match-arrow { display: none; }
+    .exam-match-select { border-radius: 6px; }
+  }
+
   /* Results screen */
   .exam-results { text-align: center; padding: 2rem 0; }
   .exam-score-ring { position: relative; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
@@ -665,17 +701,17 @@
   </header>
 
   <nav class="nav-tabs">
-    <button class="nav-tab active" data-view="browse">// Browse</button>
+    <button class="nav-tab" data-view="browse">// Browse</button>
     <button class="nav-tab" data-view="study">// Study</button>
     <button class="nav-tab" data-view="progress">// Progress</button>
-    <button class="nav-tab" data-view="exam">// Exam</button>
+    <button class="nav-tab active" data-view="exam">// Exam</button>
   </nav>
 
   <!-- BROWSE VIEW -->
-  <section class="view active" id="view-browse">
+  <section class="view" id="view-browse">
     <div class="stats">
-      <div class="stat">Total: <strong id="total-count">0</strong></div>
-      <div class="stat">Shown: <strong id="shown-count">0</strong></div>
+      <div class="stat">Total: <strong id="total-count">159</strong></div>
+      <div class="stat">Shown: <strong id="shown-count">159</strong></div>
       <div class="stat">Flipped: <strong id="flipped-count">0</strong></div>
       <div class="stat">Learned: <strong id="learned-count">0</strong></div>
     </div>
@@ -684,53 +720,2992 @@
       <input type="text" id="search" placeholder="Search questions..." oninput="filterCards()">
     </div>
 
-    <div class="filters" id="filters"></div>
+    <div class="filters" id="filters"><button class="filter-btn active">All</button><button class="filter-btn">ARP</button><button class="filter-btn">Addressing</button><button class="filter-btn">Application Layer</button><button class="filter-btn">Automation</button><button class="filter-btn">Cabling</button><button class="filter-btn">Configuration</button><button class="filter-btn">DNS</button><button class="filter-btn">Data Link Layer</button><button class="filter-btn">Ethernet</button><button class="filter-btn">IOS CLI</button><button class="filter-btn">IP Connectivity</button><button class="filter-btn">IP Services</button><button class="filter-btn">IPv4</button><button class="filter-btn">IPv4 vs IPv6</button><button class="filter-btn">IPv6</button><button class="filter-btn">NAT</button><button class="filter-btn">Network Characteristics</button><button class="filter-btn">Network Fundamentals</button><button class="filter-btn">Network Layer</button><button class="filter-btn">Network Models</button><button class="filter-btn">Networking Trends</button><button class="filter-btn">OSI Model</button><button class="filter-btn">Ports</button><button class="filter-btn">Protocols</button><button class="filter-btn">QoS</button><button class="filter-btn">Routing</button><button class="filter-btn">Security</button><button class="filter-btn">Services</button><button class="filter-btn">Subnetting</button><button class="filter-btn">Switching</button><button class="filter-btn">TCP/IP Model</button><button class="filter-btn">Transport Layer</button><button class="filter-btn">Troubleshooting</button><button class="filter-btn">Windows CLI</button><button class="filter-btn">Wireless</button></div>
 
     <h2 class="section-title">
       <span>// Learned <strong id="learned-count-inline">0</strong></span>
       <span class="line"></span>
       <span style="font-size:0.65rem;">drag cards here</span>
     </h2>
-    <div class="learned-zone" id="learned-zone"></div>
+    <div class="learned-zone" id="learned-zone"><div class="empty-hint">// drop cards here once you've learned them</div></div>
 
     <h2 class="section-title">
       <span>// To Learn</span>
       <span class="line"></span>
     </h2>
-    <div class="grid drop-target" id="grid"></div>
+    <div class="grid drop-target" id="grid"><div class="flip-card" data-num="1" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q1 · Protocols</div>
+        <div class="q-text">Which two traffic types use the Real-Time Transport Protocol (RTP)? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ video</span><br><span class="correct-answer">✓ voice</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">RTP is designed for end-to-end delivery of real-time audio and video. Voice and video traffic (VoIP, live streaming) use RTP because they prioritize low latency over guaranteed delivery.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="2" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q2 · Wireless</div>
+        <div class="q-text">Which wireless technology has low-power and data rate requirements making it popular in home automation applications?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ ZigBee</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">ZigBee (IEEE 802.15.4) is designed for personal-area networks with low energy, power, and data rate requirements — ideal for home automation devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="3" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q3 · TCP/IP Model</div>
+        <div class="q-text">Which layer of the TCP/IP model provides a route to forward messages through an internetwork?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ internet</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The Internet layer of the TCP/IP model (corresponding to the OSI Network layer) addresses and routes messages through an internetwork.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="4" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q4 · DNS</div>
+        <div class="q-text">Which type of server relies on record types such as A, NS, AAAA, and MX in order to provide services?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ DNS</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A DNS server stores records: A (IPv4 address), NS (name server), AAAA (IPv6 address), MX (mail exchange).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="5" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q5 · Protocols</div>
+        <div class="q-text">What are proprietary protocols?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ protocols developed by organizations who have control over their definition and operation</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Proprietary protocols have their definition and operation controlled by one company or vendor. TCP/IP is an open standard, not proprietary.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="6" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q6 · DNS</div>
+        <div class="q-text">What service is provided by DNS?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Resolves domain names, such as cisco.com, into IP addresses.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">DNS translates human-readable domain names (e.g. cisco.com) into numeric IP addresses required for network routing.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="7" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q7 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 110. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ POP3</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 110 is reserved for POP3 (Post Office Protocol v3) — used to retrieve email from a server to the client's local application.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="8" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q8 · Windows CLI</div>
+        <div class="q-text">What command can be used on a Windows PC to see the IP configuration of that computer?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ ipconfig</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The ipconfig command displays the current IPv4/IPv6 address, subnet mask, and default gateway on a Windows PC. Use ipconfig /all for more details.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="9" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q9 · Network Models</div>
+        <div class="q-text">A wired laser printer is attached to a home computer. That printer has been shared so that other computers on the home network can also use the printer. What networking model is in use?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ peer-to-peer (P2P)</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">P2P networks allow two or more devices to share resources (like printers or files) without a dedicated server.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="10" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q10 · Security</div>
+        <div class="q-text">What characteristic describes a virus?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ malicious software or code running on an end device</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A virus is malicious software running on an end device that spreads by attaching to programs or files and activating when run.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="11" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q11 · QoS</div>
+        <div class="q-text">Three bank employees are using the corporate network. The first employee uses a web browser to view a company web page in order to read some announcements. The second employee accesses the corporate database to perform some financial transactions. The third employee participates in an important live audio conference with other corporate managers in branch offices. If QoS is implemented on this network, what will be the priorities from highest to lowest of the different data types?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ audio conference, financial transactions, web page</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">QoS prioritizes voice (real-time, sensitive to delay) &gt; transaction data &gt; web page content.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="12" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q12 · IPv6</div>
+        <div class="q-text">Match the description to the IPv6 addressing component. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2022/10/2022-11-01_100633.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ the last 64 bits, identifies a specific device → interface ID</span><br><span class="correct-answer">✓ used by the ISP to identify the customer network → global routing prefix</span><br><span class="correct-answer">✓ used by the organization to identify subnets → subnet ID</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">In an IPv6 address: the global routing prefix (first 48 bits) is assigned by the ISP to identify the network. The subnet ID (next 16 bits) is used by organizations to define subnets. The interface ID (last 64 bits) identifies the specific device.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="13" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q13 · TCP/IP Model</div>
+        <div class="q-text">Refer to the exhibit. If Host1 were to transfer a file to the server, what layers of the TCP/IP model would be used?</div><img src="https://itexamanswers.net/wp-content/uploads/2016/03/i275370v1n1_275370-2.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ application, transport, Internet, and network access layers</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">File transfer (FTP) uses all four TCP/IP layers: application, transport, internet, and network access.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="14" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q14 · Switching</div>
+        <div class="q-text">Match the characteristic to the forwarding method. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2016/03/2017-05-22_175719.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ always stores the entire frame</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Store-and-forward always stores the entire frame, then checks the CRC and frame length before forwarding. Cut-through starts forwarding immediately (lower latency, may pass corrupted/runt frames).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="15" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q15 · Routing</div>
+        <div class="q-text">Refer to the exhibit. The IP address of which device interface should be used as the default gateway setting of host H1?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/35.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ R1: G0/0</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The default gateway for a host is the router interface directly attached to the host's local LAN — in this case, R1's G0/0 interface.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="16" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q16 · Services</div>
+        <div class="q-text">What service is provided by Internet Messenger?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ An application that allows real-time chatting among remote users.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Internet Messenger (instant messaging) enables real-time synchronous text communication between remote users.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="17" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q17 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. Match the network with the correct IP address and prefix that will satisfy the usable host addressing requirements for each network.</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i304956v6n1_207918.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 192.168.0.128 /25 → Network A</span><br><span class="correct-answer">✓ 192.168.0.0 /26 → Network B</span><br><span class="correct-answer">✓ 192.168.0.96 /27 → Network C</span><br><span class="correct-answer">✓ 192.168.0.80 /30 → Network D</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Network A needs 192.168.0.128/25 (128 hosts). Network B needs 192.168.0.0/26 (64 hosts). Network C needs 192.168.0.96/27 (32 hosts). Network D needs 192.168.0.80/30 (4 hosts).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="18" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q18 · ARP</div>
+        <div class="q-text">Refer to the exhibit. Which protocol was responsible for building the table that is shown?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/2021-03-22_150538.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ ARP</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The 'arp -a' command on a Windows PC displays the ARP table — mappings of IP addresses to MAC addresses.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="19" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q19 · Cabling</div>
+        <div class="q-text">A network administrator notices that some newly installed Ethernet cabling is carrying corrupt and distorted data signals. The new cabling was installed in the ceiling close to fluorescent lights and electrical equipment. Which two factors may interfere with the copper cabling and result in signal distortion and data corruption? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ RFI</span><br><span class="correct-answer">✓ EMI</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">EMI (electromagnetic interference) and RFI (radio frequency interference) from external sources like fluorescent lights and motors can corrupt data signals on copper cabling.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="20" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q20 · ARP</div>
+        <div class="q-text">A host is trying to send a packet to a device on a remote LAN segment, but there are currently no mappings in its ARP cache. How will the device obtain a destination MAC address?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ It will send an ARP request for the MAC address of the default gateway.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">For remote destinations, the host sends an ARP request for its default gateway's MAC address — not the final destination — since Layer 2 frames are local only.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="21" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q21 · Transport Layer</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 21. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ FTP</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 21 is the well-known port used by FTP (File Transfer Protocol) for its control connection, used to send commands to the server and receive replies.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="22" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q22 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 53. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ DNS</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 53 is reserved for DNS (Domain Name System) — used to resolve domain names to IP addresses.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="23" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q23 · Subnetting</div>
+        <div class="q-text">A network administrator is adding a new LAN to a branch office. The new LAN must support 25 connected devices. What is the smallest network mask that the network administrator can use for the new network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.224</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">/27 (255.255.255.224) provides 2⁵−2 = 30 usable host addresses — enough for 25 devices. /28 only gives 14 usable addresses.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="24" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q24 · Security</div>
+        <div class="q-text">What characteristic describes a Trojan horse?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ malicious software or code running on an end device</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A Trojan horse disguises itself as legitimate software. Once executed by the user, it performs harmful actions like data theft or creating backdoors.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="25" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q25 · Services</div>
+        <div class="q-text">What service is provided by HTTPS?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Uses encryption to secure the exchange of text, graphic images, sound, and video on the web.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">HTTPS uses SSL/TLS to encrypt web traffic (text, images, video) between client and server, protecting against interception.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="26" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q26 · Ports</div>
+        <div class="q-text">A technician with a PC is using multiple applications while connected to the Internet. How is the PC able to keep track of the data flow between multiple application sessions and have each application receive the correct packet flows?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Based on the source port number used by each application.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Each application gets a unique randomly-generated source port number to track individual sessions simultaneously.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="27" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q27 · Subnetting</div>
+        <div class="q-text">A network administrator is adding a new LAN to a branch office. The new LAN must support 61 connected devices. What is the smallest network mask that the network administrator can use for the new network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.192</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">/26 (255.255.255.192) provides 2⁶−2 = 62 usable host addresses — just enough for 61 devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="28" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q28 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. Match the network with the correct IP address and prefix that will satisfy the usable host addressing requirements for each network. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2016/03/i207918v1n1_207918-1-1.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 192.168.0.128 /25 → Network A</span><br><span class="correct-answer">✓ 192.168.0.0 /26 → Network B</span><br><span class="correct-answer">✓ 192.168.0.96 /27 → Network C</span><br><span class="correct-answer">✓ 192.168.0.80 /30 → Network D</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Same subnetting match as Q17: A=/25, B=/26, C=/27, D=/30.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="29" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q29 · Security</div>
+        <div class="q-text">What characteristic describes a DoS attack?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ an attack that slows or crashes a device or network service</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A Denial of Service (DoS) attack floods resources to prevent legitimate users from accessing network services.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="30" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q30 · Transport Layer</div>
+        <div class="q-text">Match the application protocols to the correct transport protocols.</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ FTP → TCP</span><br><span class="correct-answer">✓ HTTP → TCP</span><br><span class="correct-answer">✓ TFTP → UDP</span><br><span class="correct-answer">✓ DHCP → UDP</span><br><span class="correct-answer">✓ DNS → UDP (TCP for zone transfer)</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">TCP provides reliable delivery for FTP, HTTP, SMTP, Telnet. UDP provides low-overhead delivery for TFTP, DHCP, DNS, SNMP.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="31" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q31 · Services</div>
+        <div class="q-text">What service is provided by SMTP?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Allows clients to send email to a mail server and servers to send email to other servers.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">SMTP (Simple Mail Transfer Protocol) handles outgoing email delivery from clients to servers and between mail servers.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="32" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q32 · Transport Layer</div>
+        <div class="q-text">Which scenario describes a function provided by the transport layer?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ A student has two web browser windows open — the transport layer ensures the correct web page is delivered to the correct browser window.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The transport layer uses source and destination port numbers to direct data to the correct application and window.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="33" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q33 · IPv6</div>
+        <div class="q-text">Refer to the exhibit. Host B on subnet Teachers transmits a packet to host D on subnet Students. Which Layer 2 and Layer 3 addresses are contained in the PDUs that are transmitted from host B to the router?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i204796v11n1_204796-TOPOLOGY-ARP.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Layer 2 destination = 00-00-0c-94-36-ab (router MAC); Layer 2 source = 00-00-0c-94-36-bb (Host B MAC); Layer 3 destination = 172.16.20.200 (Host D); Layer 3 source = 172.16.10.200 (Host B)</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Crossing subnets: Layer 3 addresses remain end-to-end (B → D). Layer 2 destination is the default gateway MAC (router), source is Host B's MAC.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="34" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q34 · Cabling</div>
+        <div class="q-text">What does the term “attenuation” mean in data communication?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ loss of signal strength as distance increases</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Attenuation is the deterioration of signal strength over distance on copper cables.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="35" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q35 · IOS CLI</div>
+        <div class="q-text">Refer to the exhibit. An administrator is trying to configure the switch but receives the error message that is displayed in the exhibit. What is the problem?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i208399v1n1_Question-1.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The administrator must first enter privileged EXEC mode before issuing the command.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The '&gt;' prompt indicates User EXEC mode. 'configure terminal' requires Privileged EXEC mode (entered with 'enable'). The '#' prompt confirms privileged mode.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="36" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q36 · TCP/IP Model</div>
+        <div class="q-text">Which two protocols operate at the top layer of the TCP/IP protocol suite? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ POP</span><br><span class="correct-answer">✓ DNS</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The top layer of TCP/IP is the application layer. DNS and POP operate here. TCP/UDP are transport layer; IP is internet layer; Ethernet is network access layer.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="37" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q37 · Security</div>
+        <div class="q-text">A company has a file server that shares a folder named Public. The network security policy specifies that the Public folder is assigned Read-Only rights to anyone who can log into the server while the Edit rights are assigned only to the network admin group. Which component is addressed in the AAA network service framework?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ authorization</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Authorization determines what resources and operations (read/edit) an authenticated user can access after logging in.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="38" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q38 · Protocols</div>
+        <div class="q-text">What three requirements are defined by the protocols used in network communcations to allow message transmission across a network? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ message size</span><br><span class="correct-answer">✓ message encoding</span><br><span class="correct-answer">✓ delivery options</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Protocols define message encoding (format conversion), message size (breaking into manageable pieces), and delivery options (unicast, multicast, broadcast).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="39" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q39 · IPv4</div>
+        <div class="q-text">What are two characteristics of IP? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ does not require a dedicated end-to-end connection</span><br><span class="correct-answer">✓ operates independently of the network media</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">IP is connectionless (no dedicated end-to-end connection), best-effort (no guaranteed delivery), and media independent.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="40" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q40 · Network Characteristics</div>
+        <div class="q-text">An employee of a large corporation remotely logs into the company using the appropriate username and password. The employee is attending an important video conference with a customer concerning a large sale. It is important for the video quality to be excellent during the meeting. The employee is unaware that after a successful login, the connection to the company ISP failed. The secondary connection, however, activated within seconds. The disruption was not noticed by the employee or other employees. What three network characteristics are described in this scenario? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ security</span><br><span class="correct-answer">✓ quality of service</span><br><span class="correct-answer">✓ fault tolerance</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Username/password = security. Excellent video = QoS. Seamless ISP failover = fault tolerance.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="41" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q41 · Cabling</div>
+        <div class="q-text">What are two common causes of signal degradation when using UTP cabling? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ improper termination</span><br><span class="correct-answer">✓ low-quality cable or connectors</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Improper termination and low-quality cable/connectors are primary causes of UTP signal degradation.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="42" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q42 · Subnetting</div>
+        <div class="q-text">Which subnet would include the address 192.168.1.96 as a usable host address?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 192.168.1.64/26</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">192.168.1.64/26 has host range 192.168.1.65–192.168.1.126, which includes .96.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="43" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q43 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. On the basis of the output, which two statements about network connectivity are correct? (Choose two.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i275429v1n1_chapter-9-WAN-images2.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ There are 4 hops between this device and the device at 192.168.100.1.</span><br><span class="correct-answer">✓ There is connectivity between this device and the device at 192.168.100.1.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The output displays a successful Layer 3 connection between a host computer and a host at 19.168.100.1. It can be determined that 4 hops exist between them and the average transmission time is 1 milliseconds. Layer 3 connectivity does not necessarily mean that an application can run between the hosts.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="44" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q44 · Troubleshooting</div>
+        <div class="q-text">Which two statements describe how to assess traffic flow patterns and network traffic types using a protocol analyzer? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Capture traffic during peak utilization times.</span><br><span class="correct-answer">✓ Perform the capture on different network segments.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Capture during peak times for a representative sample, and on different segments since some traffic is local to specific segments.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="45" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q45 · IPv6</div>
+        <div class="q-text">What is the consequence of configuring a router with the ipv6 unicast-routing global configuration command?​</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ IPv6 enabled router interfaces begin sending ICMPv6 Router Advertisement messages.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">This command enables IPv6 routing. IPv6-enabled interfaces then send ICMPv6 Router Advertisements to help hosts with SLAAC.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="46" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q46 · OSI Model</div>
+        <div class="q-text">Which three layers of the OSI model map to the application layer of the TCP/IP model? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ application</span><br><span class="correct-answer">✓ session</span><br><span class="correct-answer">✓ presentation</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">OSI layers 5 (session), 6 (presentation), and 7 (application) all map to the TCP/IP application layer.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="47" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q47 · Routing</div>
+        <div class="q-text">Refer to the exhibit. If PC1 is sending a packet to PC2 and routing has been configured between the two routers, what will R1 do with the Ethernet frame header attached by PC1?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i271152v1n1_271152.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ remove the Ethernet header and configure a new Layer 2 header before sending it out S0/0/0</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Routers strip the Layer 2 frame header and create a new one appropriate for the next network segment (e.g., serial link).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="48" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q48 · Routing</div>
+        <div class="q-text">What will happen if the default gateway address is incorrectly configured on a host?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The host cannot communicate with hosts in other networks.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">With an incorrect default gateway, the host can still communicate locally but cannot reach remote networks.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="49" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q49 · ARP</div>
+        <div class="q-text">What are two features of ARP? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ If a host needs to send to a local device and has IP but no MAC, it generates an ARP broadcast.</span><br><span class="correct-answer">✓ If a device receiving ARP request has the destination IPv4 address, it responds with an ARP reply.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">ARP works by: (1) host broadcasts when MAC is unknown; (2) the target device replies with its MAC address.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="50" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q50 · Subnetting</div>
+        <div class="q-text">A network administrator is adding a new LAN to a branch office. The new LAN must support 90 connected devices. What is the smallest network mask that the network administrator can use for the new network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.128</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">/25 (255.255.255.128) provides 2⁷−2 = 126 usable host addresses — sufficient for 90 devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="51" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q51 · IPv6</div>
+        <div class="q-text">What are two ICMPv6 messages that are not present in ICMP for IPv4? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Neighbor Solicitation</span><br><span class="correct-answer">✓ Router Advertisement</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">ICMPv6 introduces Neighbor Solicitation and Router Advertisement as part of the Neighbor Discovery Protocol (NDP) — not present in ICMPv4.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="52" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q52 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 80. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ HTTP</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 80 is reserved for HTTP — the protocol used to transfer web pages from servers to browsers.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="53" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q53 · Services</div>
+        <div class="q-text">What is an advantage for small organizations of adopting IMAP instead of POP?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Messages are kept in the mail servers until they are manually deleted from the email client.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">IMAP keeps messages on the server until manually deleted, allowing access from multiple devices. POP typically downloads and removes messages from the server.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="54" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q54 · Troubleshooting</div>
+        <div class="q-text">A technician can ping the IP address of the web server of a remote company but cannot successfully ping the URL address of the same web server. Which software utility can the technician use to diagnose the problem?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ nslookup</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">nslookup manually queries DNS name servers to resolve hostnames — useful for diagnosing DNS resolution issues.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="55" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q55 · Data Link Layer</div>
+        <div class="q-text">Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ enables IPv4 and IPv6 to utilize the same physical medium</span><br><span class="correct-answer">✓ places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">LLC identifies the Layer 3 protocol being encapsulated (allowing IPv4 and IPv6 to share the same medium). MAC handles addressing, delimiting, and error detection.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="56" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q56 · Switching</div>
+        <div class="q-text">The global configuration command ip default-gateway 172.16.100.1 is applied to a switch. What is the effect of this command?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The switch can be remotely managed from a host on another network.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Configuring a default gateway on a switch allows it to communicate beyond its local network, enabling remote management.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="57" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q57 · Security</div>
+        <div class="q-text">What happens when the transport input ssh command is entered on the switch vty lines?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Communication between the switch and remote users is encrypted.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">'transport input ssh' encrypts all inbound connections to the VTY lines, replacing insecure Telnet with SSH.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="58" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q58 · Security</div>
+        <div class="q-text">Match the type of threat with the cause. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2019/12/2024-11-19_103653.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ electrical → voltage spikes, brownouts, noise, total power loss</span><br><span class="correct-answer">✓ hardware → physical damage to devices/cabling</span><br><span class="correct-answer">✓ environmental → temperature/humidity extremes</span><br><span class="correct-answer">✓ maintenance → poor handling (ESD), lack of spares, poor cabling/labeling</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Cisco classifies physical threats into four categories: hardware, environmental, electrical, and maintenance.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="59" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q59 · Security</div>
+        <div class="q-text">A disgruntled employee is using some free wireless networking tools to determine information about the enterprise wireless networks. This person is planning on using this information to hack the wireless network. What type of attack is this?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ reconnaissance</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Reconnaissance attacks involve unauthorized discovery and documentation of networks, systems, and vulnerabilities before launching an actual attack.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="60" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q60 · Services</div>
+        <div class="q-text">What service is provided by HTTP?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ A basic set of rules for exchanging text, graphic images, sound, video, and other multimedia files on the web.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">HTTP defines rules for how web browsers and servers exchange content including text, images, sound, and video.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="61" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q61 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 67. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ DHCP</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 67 is the DHCP server port. Clients send requests to port 67 to obtain automatic IP configuration.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="62" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q62 · ARP</div>
+        <div class="q-text">What are two problems that can be caused by a large number of ARP request and reply messages? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The ARP request is sent as a broadcast, and will flood the entire subnet.</span><br><span class="correct-answer">✓ All ARP request messages must be processed by all nodes on the local network.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">ARP requests flood the subnet as broadcasts, and all nodes must process them (CPU interrupt) — both create overhead.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="63" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q63 · Troubleshooting</div>
+        <div class="q-text">A group of Windows PCs in a new subnet has been added to an Ethernet network. When testing the connectivity, a technician finds that these PCs can access local network resources but not the Internet resources. To troubleshoot the problem, the technician wants to initially confirm the IP address and DNS configurations on the PCs, and also verify connectivity to the local router. Which three Windows CLI commands and utilities will provide the necessary information? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ ping</span><br><span class="correct-answer">✓ ipconfig</span><br><span class="correct-answer">✓ nslookup</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">ipconfig verifies IP/DNS config; nslookup checks DNS resolution; ping verifies connectivity to the default gateway.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="64" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q64 · Routing</div>
+        <div class="q-text">During the process of forwarding traffic, what will the router do immediately after matching the destination IP address to a network on a directly connected routing table entry?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ switch the packet to the directly connected interface</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">When the destination is on a directly connected interface, the packet is immediately switched to that interface.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="65" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q65 · Security</div>
+        <div class="q-text">What characteristic describes antispyware?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ applications that protect end devices from becoming infected with malicious software</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Antispyware protects end devices (PCs, smartphones) from malicious software that secretly collects user information.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="66" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q66 · Security</div>
+        <div class="q-text">A network administrator needs to keep the user ID, password, and session contents private when establishing remote CLI connectivity with a switch to manage it. Which access method should be chosen?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ SSH</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">SSH (Secure Shell) encrypts all session data including credentials, unlike Telnet which sends everything in plaintext.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="67" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q67 · Security</div>
+        <div class="q-text">What are the two most effective ways to defend against malware? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Update the operating system and other application software.</span><br><span class="correct-answer">✓ Install and update antivirus software.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Keeping software updated patches vulnerabilities; antivirus software detects and removes malware — the two most direct defenses.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="68" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q68 · Security</div>
+        <div class="q-text">Which type of security threat would be responsible if a spreadsheet add-on disables the local software firewall?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Trojan horse</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A Trojan horse hides harmful functionality inside legitimate-looking software (like a spreadsheet add-on).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="69" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q69 · Data Link Layer</div>
+        <div class="q-text">Which frame field is created by a source node and used by a destination node to ensure that a transmitted data signal has not been altered by interference, distortion, or signal loss?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ frame check sequence field</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The FCS (Frame Check Sequence) field uses a CRC calculation. If the destination's calculation doesn't match, the frame is discarded.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="70" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q70 · Subnetting</div>
+        <div class="q-text">A network administrator is adding a new LAN to a branch office. The new LAN must support 4 connected devices. What is the smallest network mask that the network administrator can use for the new network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.248</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">/29 (255.255.255.248) provides 2³−2 = 6 usable host addresses — the smallest that fits 4 devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="71" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q71 · Services</div>
+        <div class="q-text">What service is provided by POP3?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Retrieves email from the server by downloading it to the local mail application of the client.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">POP3 (port 110) downloads email from the server to the client's local application, typically deleting it from the server.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="72" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q72 · Security</div>
+        <div class="q-text">What two security solutions are most likely to be used only in a corporate environment? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ virtual private networks</span><br><span class="correct-answer">✓ intrusion prevention systems</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">IPS monitors and stops network threats in real time; VPNs provide encrypted remote access — both are corporate-level solutions.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="73" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q73 · Security</div>
+        <div class="q-text">What characteristic describes antivirus software?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ applications that protect end devices from becoming infected with malicious software</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Antivirus software protects end devices (PCs, smartphones) from viruses, worms, and other malware.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="74" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q74 · IPv4</div>
+        <div class="q-text">What mechanism is used by a router to prevent a received IPv4 packet from traveling endlessly on a network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Decrements TTL by 1; if result is 0, discards and sends Time Exceeded message.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Routers decrement the TTL field by 1. When it reaches 0, the packet is discarded and an ICMP Time Exceeded message is sent to the source.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="75" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q75 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 69. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ TFTP</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 69 is reserved for TFTP (Trivial File Transfer Protocol) — a simple, connectionless UDP-based file transfer protocol.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="76" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q76 · Security</div>
+        <div class="q-text">An administrator defined a local user account with a secret password on router R1 for use with SSH. Which three additional steps are required to configure R1 to accept only encrypted SSH connections? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Configure the IP domain name on the router.</span><br><span class="correct-answer">✓ Generate the SSH keys.</span><br><span class="correct-answer">✓ Enable inbound vty SSH sessions.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">After creating the user: (1) set ip domain-name, (2) generate RSA keys with 'crypto key generate rsa', (3) set 'transport input ssh' on vty lines.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="77" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q77 · Automation</div>
+        <div class="q-text">Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ implements trailer with frame check sequence for error detection</span><br><span class="correct-answer">✓ implements a process to delimit fields within an Ethernet 2 frame</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">MAC sublayer = data encapsulation (frame delimiting) + error detection (FCS trailer) + media access control. LLC handles upper-layer/protocol identification.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="78" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q78 · IPv6</div>
+        <div class="q-text">An IPv6 enabled device sends a data packet with the destination address of FF02::2. What is the target of this packet?​</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ all IPv6 configured routers on the local link</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">FF02::2 is the all-routers multicast address. FF02::1 targets all IPv6-enabled nodes on the local link.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="79" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q79 · IPv6</div>
+        <div class="q-text">What are the three parts of an IPv6 global unicast address? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ subnet ID</span><br><span class="correct-answer">✓ global routing prefix</span><br><span class="correct-answer">✓ interface ID</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">IPv6 global unicast: global routing prefix (from ISP) + subnet ID (organization-defined) + interface ID (host portion, 64-bit).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="80" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q80 · Wireless</div>
+        <div class="q-text">A network administrator is designing the layout of a new wireless network. Which three areas of concern should be accounted for when building a wireless network? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ interference</span><br><span class="correct-answer">✓ security</span><br><span class="correct-answer">✓ coverage area</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Wireless network design concerns: coverage area (signal reach), interference (from other devices), and security (unauthorized access).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="81" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q81 · IOS CLI</div>
+        <div class="q-text">A new network administrator has been asked to enter a banner message on a Cisco device. What is the fastest way a network administrator could test whether the banner is properly configured?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Exit privileged EXEC mode and press Enter.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Type 'exit' at the Router# prompt and press Enter — the banner appears immediately without rebooting.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="82" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q82 · Wireless</div>
+        <div class="q-text">What method is used to manage contention-based access on a wireless network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ CSMA/CA</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">CSMA/CA (Collision Avoidance) is used in wireless networks. CSMA/CD (Collision Detection) is used in wired Ethernet.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="83" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q83 · Data Link Layer</div>
+        <div class="q-text">What is a function of the data link layer?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ provides for the exchange of frames over a common local media</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The data link layer (Layer 2) encapsulates Layer 3 packets into frames and manages delivery between NICs on the same local network.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="84" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q84 · Transport Layer</div>
+        <div class="q-text">What is the purpose of the TCP sliding window?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ to request that a source decrease the rate at which it transmits data</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The TCP sliding window allows the destination to tell the source to slow down by reducing the window size value in segments.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="85" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q85 · Security</div>
+        <div class="q-text">What characteristic describes spyware?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ software that is installed on a user device and collects information about the user</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Spyware secretly installs on end devices and collects user information (browsing habits, credentials) without the user's knowledge.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="86" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q86 · Switching</div>
+        <div class="q-text">Which switching method drops frames that fail the FCS check?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ store-and-forward switching</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Store-and-forward stores the entire frame and checks the FCS before forwarding. Corrupt frames are dropped. Cut-through does no error checking.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="87" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q87 · IPv6</div>
+        <div class="q-text">Which range of link-local addresses can be assigned to an IPv6-enabled interface?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ FE80::/10</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">IPv6 link-local addresses are in the range FE80::/10 to FEBF::/10. FF00::/8 is multicast; FDEE::/7 is unique local; FEC0::/10 is deprecated.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="88" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q88 · Services</div>
+        <div class="q-text">What service is provided by FTP?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Allows for data transfers between a client and a file server.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">FTP (File Transfer Protocol) enables uploading and downloading of files between a client and server using TCP ports 20 (data) and 21 (control).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="89" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q89 · Configuration</div>
+        <div class="q-text">A user is attempting to access http://www.cisco.com/ without success. Which two configuration values must be set on the host to allow this access? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ DNS server</span><br><span class="correct-answer">✓ default gateway</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A DNS server is needed to resolve the domain name; a default gateway is needed to route packets to the remote internet.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="90" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q90 · NAT</div>
+        <div class="q-text">Which two statements accurately describe an advantage or a disadvantage when deploying NAT for IPv4 in a network? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ NAT introduces problems for some applications that require end-to-end connectivity.</span><br><span class="correct-answer">✓ NAT provides a solution to slow down the IPv4 address depletion.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">NAT conserves public IPs (slowing IPv4 depletion) but breaks end-to-end connectivity for some applications by hiding real IP addresses.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="91" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q91 · IPv6</div>
+        <div class="q-text">What would be the interface ID of an IPv6 enabled interface with a MAC address of 1C-6F-65-C2-BD-F8 when the interface ID is generated by using the EUI-64 process?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 1E6F:65FF:FEC2:BDF8</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">EUI-64: (1) flip 7th bit of first byte (1C → 1E), (2) insert FFFE in the middle → 1E6F:65FF:FEC2:BDF8.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="92" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q92 · IPv6</div>
+        <div class="q-text">Refer to the exhibit. PC1 issues an ARP request because it needs to send a packet to PC2. In this scenario, what will happen next?</div><img src="https://itexamanswers.net/wp-content/uploads/2016/03/i209824v1n1_209824.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ PC2 will send an ARP reply with the PC2 MAC address.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">When a network device wants to communicate with another device on the same network, it sends a broadcast ARP request. In this case, the request will contain the IP address of PC2. The destination device (PC2) sends an ARP reply with its MAC address.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="93" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q93 · Services</div>
+        <div class="q-text">What service is provided by BOOTP?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Legacy application that enables a diskless workstation to discover its own IP address and find a BOOTP server.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">BOOTP (Bootstrap Protocol) is a predecessor to DHCP that allowed diskless workstations to auto-discover their IP address and boot files.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="94" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q94 · Security</div>
+        <div class="q-text">What characteristic describes adware?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ software that is installed on a user device and collects information about the user</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Adware (like spyware) is software installed on a user's device that secretly collects information, often to display targeted advertising.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="95" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q95 · Switching</div>
+        <div class="q-text">When a switch configuration includes a user-defined error threshold on a per-port basis, to which switching method will the switch revert when the error threshold is reached?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ store-and-forward</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">When error rates exceed the threshold, the port automatically reverts to store-and-forward switching to check all frames for errors.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="96" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q96 · Application Layer</div>
+        <div class="q-text">Match a statement to the related network model. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/2022-05-12_101113.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ peer-to-peer network → no dedicated server required; client and server roles are set on a per-request basis</span><br><span class="correct-answer">✓ peer-to-peer application → requires a specific user interface; a background service is required</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">P2P networks share resources without dedicated servers. A P2P application needs both a UI and a background service so the device can act as client and server.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="97" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q97 · Data Link Layer</div>
+        <div class="q-text">What are two primary responsibilities of the Ethernet MAC sublayer? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ accessing the media</span><br><span class="correct-answer">✓ data encapsulation</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">MAC sublayer is responsible for: data encapsulation (framing, addressing, error detection) and media access control (managing NIC for sending/receiving).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="98" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q98 · IOS CLI</div>
+        <div class="q-text">Refer to the exhibit. What three facts can be determined from the viewable output of the show ip interface brief command? (Choose three.)</div><img src="https://itexamanswers.net/wp-content/uploads/2016/03/i274067v1n1_274067.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The switch can be remotely managed.</span><br><span class="correct-answer">✓ One device is attached to a physical interface.</span><br><span class="correct-answer">✓ The default SVI has been configured.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">VLAN1 (default SVI) with IP = remotely manageable. Fa0/0 showing up/up = one device connected. VLAN1 present = default SVI configured.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="99" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q99 · Automation</div>
+        <div class="q-text">Match each type of frame field to its function. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/11.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ addressing → directs frame toward destination</span><br><span class="correct-answer">✓ error detection → checks if frame was damaged</span><br><span class="correct-answer">✓ type → identifies Layer 3 protocol (used by LLC)</span><br><span class="correct-answer">✓ frame start → marks beginning of frame</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Standard Ethernet frame fields and their purposes.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="100" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q100 · IPv6</div>
+        <div class="q-text">What is the subnet ID associated with the IPv6 address 2001:DA48:FC5:A4:3D1B::1/64?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 2001:DA48:FC5:A4::/64</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">With /64, the first 64 bits are the network+subnet. The subnet ID is 2001:DA48:FC5:A4::/64 (the first four 16-bit groups).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="101" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q101 · Security</div>
+        <div class="q-text">Match the firewall function to the type of threat protection it provides to the network. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/18.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ application filtering → prevents access by port number</span><br><span class="correct-answer">✓ packet filtering → prevents access based on IP or MAC address</span><br><span class="correct-answer">✓ stateful packet inspection → prevents unsolicited incoming sessions</span><br><span class="correct-answer">✓ URL filtering → prevents access to specific websites</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Firewall techniques: packet filter (L3/L4), stateful (session aware), application filter (port/app), URL filter.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="102" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q102 · Subnetting</div>
+        <div class="q-text">Users are reporting longer delays in authentication and in accessing network resources during certain time periods of the week. What kind of information should network engineers check to find out if this situation is part of a normal network behavior?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ the network performance baseline</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The network engineers should first establish that the reported performance of the network is in fact abnormal. This is done by referring to the documented network performance baseline.Once it has been verified that the network is not having a proper performance, then specific troubleshooting processes can be applied.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="103" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q103 · Security</div>
+        <div class="q-text">How does the service password-encryption command enhance password security on Cisco routers and switches?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ It encrypts passwords that are stored in router or switch configuration files.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">'service password-encryption' encrypts plaintext passwords in the running/startup config files so they can't be read in plain text.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="104" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q104 · IPv4 vs IPv6</div>
+        <div class="q-text">Which two statements are correct in a comparison of IPv4 and IPv6 packet headers? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The Source Address field name from IPv4 is kept in IPv6.</span><br><span class="correct-answer">✓ The Time-to-Live field from IPv4 has been replaced by Hop Limit in IPv6.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Both IPv4 and IPv6 have Source Address and Version fields. TTL (IPv4) → Hop Limit (IPv6). IPv6 removed the Header Checksum field.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="105" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q105 · Subnetting</div>
+        <div class="q-text">A network administrator wants to have the same network mask for all networks at a particular small site. The site has the following networks and number of devices: IP phones – 22 addresses PCs – 20 addresses needed Printers – 2 addresses needed Scanners – 2 addresses needed</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.224</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">If the same mask is to be used, then the network with the most hosts must be examined for the number of hosts, which in this case is 22 hosts. Thus, 5 host bits are needed. The /27 or 255.255.255.224 subnet mask would be appropriate to use for these networks.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="106" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q106 · Network Fundamentals</div>
+        <div class="q-text">What characteristic describes identity theft?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ the use of stolen credentials to access private data</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Identity theft is a specific type of information theft where a threat actor steals login credentials or personal information to access private data . Once accessed, this information is often used to take over a person’s identity to make unauthorized purchases or obtain legal documents.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="107" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q107 · Subnetting</div>
+        <div class="q-text">A network administrator is adding a new LAN to a branch office. The new LAN must support 200 connected devices. What is the smallest network mask that the network administrator can use for the new network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.0</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">/24 (255.255.255.0) provides 2⁸−2 = 254 usable host addresses. 7 host bits only gives 126 — not enough for 200 devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="108" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q108 · IP Services</div>
+        <div class="q-text">What are three commonly followed standards for constructing and installing cabling? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ cable lengths</span><br><span class="correct-answer">✓ pinouts</span><br><span class="correct-answer">✓ connector types</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">According to the TIA/EIA-568 standard, which governs commercial cabling for LAN environments, several physical elements are defined to ensure consistency and performance. These include cable lengths , the specific connector types used (such as RJ-45), and the wire color-coded pin assignments, commonly referred to as pinouts .</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="109" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q109 · IP Services</div>
+        <div class="q-text">Refer to the exhibit. What is wrong with the displayed termination?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i274300v1n1_209630-300x221-1.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The untwisted length of each wire is too long.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">When a cable to an RJ-45 connector is terminated, it is important to ensure that the untwisted wires are not too long and that the flexible plastic sheath surrounding the wires is crimped down and not the bare wires. None of the colored wires should be visible from the bottom of the jack.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="110" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q110 · Addressing</div>
+        <div class="q-text">Match the characteristic to the category. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/2020-03-26_165542.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 48 bits</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">MAC addresses are 48 bits (Layer 2), divided into a 24-bit OUI and a 24-bit unique identifier. IP addresses are 32 (IPv4) or 128 (IPv6) bits.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="111" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q111 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 143. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ IMAP</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 143 is reserved for IMAP (Internet Message Access Protocol) — allows clients to access and manage email stored on a mail server.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="112" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q112 · Transport Layer</div>
+        <div class="q-text">What are two characteristics shared by TCP and UDP? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ port numbering</span><br><span class="correct-answer">✓ use of checksum</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Both TCP and UDP use port numbers to identify applications, and both use checksums for error detection.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="113" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q113 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. Which two network addresses can be assigned to the network containing 10 hosts? Your answers should waste the fewest addresses, not reuse addresses that are already assigned, and stay within the 10.18.10.0/24 range of addresses. (Choose two.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i274518v1n1_247518.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 10.18.10.208/28</span><br><span class="correct-answer">✓ 10.18.10.224/28</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Addresses 10.18.10.0 through 10.18.10.63 are taken for the leftmost network. Addresses 192 through 199 are used by the center network. Because 4 host bits are needed to accommodate 10 hosts, a /28 mask is needed. 10.18.10.200/28 is not a valid network number. Two subnets that can be used are 10.18.10.208/28 and 10.18.10.224/28.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="114" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q114 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 21. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ FTP</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 21 is FTP's control connection port, used for sending commands and receiving replies during file transfers.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="115" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q115 · OSI Model</div>
+        <div class="q-text">What attribute of a NIC would place it at the data link layer of the OSI model?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ MAC address</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The MAC address is a Layer 2 (data link layer) physical address burned into the NIC, used for local network communication.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="116" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q116 · Subnetting</div>
+        <div class="q-text">A network administrator is adding a new LAN to a branch office. The new LAN must support 10 connected devices. What is the smallest network mask that the network administrator can use for the new network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.240</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">/28 (255.255.255.240) provides 2⁴−2 = 14 usable host addresses — the smallest that fits 10 devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="117" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q117 · Cabling</div>
+        <div class="q-text">What technique is used with UTP cable to help protect against signal interference from crosstalk?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ twisting the wires together into pairs</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Twisting wire pairs together causes their magnetic fields to cancel each other out, reducing crosstalk interference.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="118" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q118 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. The network administrator has assigned the LAN of LBMISS an address range of 192.168.10.0. This address range has been subnetted using a /29 prefix. In order to accommodate a new building, the technician has decided to use the fifth subnet for configuring the new network (subnet zero is the first subnet). By company policies, the router interface is always assigned the first usable host address and the workgroup server is given the last usable host address. Which configuration should be entered into the properties of the workgroup server to allow connectivity to the Internet?</div><img src="https://itexamanswers.net/wp-content/uploads/2017/05/i209840v1n3_209840.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ IP address: 192.168.10.38 subnet mask: 255.255.255.248, default gateway: 192.168.10.33</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Using a /29 prefix to subnet 192.168.10.0 results in subnets that increment by 8: 192.168.10.0 (1) 192.168.10.8 (2) 192.168.10.16 (3) 192.168.10.24 (4) 192.168.10.32 (5)</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="119" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q119 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. The switches are in their default configuration. Host A needs to communicate with host D, but host A does not have the MAC address for its default gateway. Which network hosts will receive the ARP request sent by host A?</div><img src="https://itexamanswers.net/wp-content/uploads/2016/03/i275353v1n1_275353.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ only hosts B, C, and router R1</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Since host A does not have the MAC address of the default gateway in its ARP table, host A sends an ARP broadcast. The ARP broadcast would be sent to every device on the local network. Hosts B, C, and router R1 would receive the broadcast. Router R1 would not forward the message.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="120" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q120 · Security</div>
+        <div class="q-text">Match a statement to the related network model. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/2020-03-26_160912.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ peer-to-peer network → no dedicated server required; client/server roles per request</span><br><span class="correct-answer">✓ peer-to-peer application → requires a specific user interface; background service required</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Same as Q96 — P2P network vs P2P application.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="121" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q121 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. A network engineer has been given the network address of 192.168.99.0 and a subnet mask of 255.255.255.192 to subnet across the four networks shown. How many total host addresses are unused across all four subnets?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/06/i304957v1n1_209418-1591171569.7915.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 200</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Usable hosts per subnet : A subnet mask of 255.255.255.192 (/26) leaves 6 host bits (32−26=6). Using the formula 2 n −2, each subnet provides 62 usable host addresses (2 6 −2=62). Used addresses : Across the four subnets, the total used addresses are 48 (30 for Network A, 14 for Network D, and 2 each for the router-to-router links in Networks B and C). Total unused : With four subnets, there are 248 total usable addresses (62×4=248). Subtracting the 48 used addresses results in 200</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="122" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q122 · IP Services</div>
+        <div class="q-text">Which connector is used with twisted-pair cabling in an Ethernet LAN?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ RJ-45</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">RJ-45 is the standard connector for twisted-pair Ethernet (Cat5/5e/6). RJ-11 is for telephones; LC/SC are fiber; BNC is coax.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="123" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q123 · Ports</div>
+        <div class="q-text">A client packet is received by a server. The packet has a destination port number of 22. What service is the client requesting?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ SSH</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Port 22 is reserved for SSH (Secure Shell) — provides encrypted remote access to network devices and servers.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="124" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q124 · Security</div>
+        <div class="q-text">What characteristic describes an IPS?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ software that identifies fast-spreading threats</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">An IPS (Intrusion Prevention System) monitors traffic for malware and attack signatures and can stop threats immediately.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="125" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q125 · Services</div>
+        <div class="q-text">What service is provided by DHCP?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Dynamically assigns IP addresses to end and intermediary devices.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">DHCP automates assignment of IP addresses, subnet masks, default gateways, and DNS server addresses to network devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="126" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q126 · IP Connectivity</div>
+        <div class="q-text">Match the header field with the appropriate layer of the OSI model. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/2020-03-26_173114.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Layer 2 → 802.2 header, FCS, destination MAC address</span><br><span class="correct-answer">✓ Layer 3 → source IP address, TTL</span><br><span class="correct-answer">✓ Layer 4 → destination port number, Acknowledgement number</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">L2 = MAC/LLC fields (802.2, FCS, MAC). L3 = IP fields (IP addr, TTL). L4 = TCP/UDP fields (port, ACK).</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="127" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q127 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. The switches have a default configuration. Host A needs to communicate with host D, but host A does not have the MAC address for the default gateway. Which network devices will receive the ARP request sent by host A?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/12/i360201v3n1_275353-1608482322.6606.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ only hosts B, C, and router R1</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Because host A does not have the MAC address of the default gateway in the ARP table, host A sends an ARP broadcast. The ARP broadcast would be sent to every device on the local network. Hosts B, C, and router R1 would receive the broadcast. Router R1 would not forward the message.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="128" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q128 · Wireless</div>
+        <div class="q-text">Which wireless technology has low-power and low-data rate requirements making it popular in IoT environments?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Zigbee</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Zigbee is designed for low data rate, low power IoT applications like wireless light switches and medical devices with long battery life.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="129" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q129 · IPv6</div>
+        <div class="q-text">What two ICMPv6 message types must be permitted through IPv6 access control lists to allow resolution of Layer 3 addresses to Layer 2 MAC addresses? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ neighbor solicitations</span><br><span class="correct-answer">✓ neighbor advertisements</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">IPv6 uses NDP instead of ARP. Neighbor Solicitation (request) and Neighbor Advertisement (reply) resolve IPv6 addresses to MAC addresses.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="130" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q130 · IPv6</div>
+        <div class="q-text">A client is using SLAAC to obtain an IPv6 address for its interface. After an address has been generated and applied to the interface, what must the client do before it can begin to use this IPv6 address?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Send an ICMPv6 Neighbor Solicitation message to ensure the address is not already in use.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Duplicate Address Detection (DAD): the client sends a Neighbor Solicitation to check if the address is already in use before assigning it.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="131" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q131 · Troubleshooting</div>
+        <div class="q-text">Two pings were issued from a host on a local network. The first ping was issued to the IP address of the default gateway of the host and it failed. The second ping was issued to the IP address of a host outside the local network and it was successful. What is a possible cause for the failed ping?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Security rules are applied to the default gateway device, preventing it from processing ping requests.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">If the ping from one host to another host on a remote network is successful, this indicates that the default gateway is operational. In this scenario, if a ping from one host to the default gateway failed, it is possible that some security features are applied to the router interface, preventing it from responding to ping requests.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="132" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q132 · IPv6</div>
+        <div class="q-text">An organization is assigned an IPv6 address block of 2001:db8:0:ca00::/56. How many subnets can be created without using bits in the interface ID space?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 256</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Standard subnets use /64. With a /56 prefix, 8 bits remain for subnetting (64−56=8). 2⁸ = 256 subnets.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="133" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q133 · Subnetting</div>
+        <div class="q-text">What subnet mask is needed if an IPv4 network has 40 devices that need IP addresses and address space is not to be wasted?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.192</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">/26 (255.255.255.192) provides 2⁶−2 = 62 usable host addresses — enough for 40 devices with minimal waste.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="134" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q134 · IPv6</div>
+        <div class="q-text">Refer to the exhibit. If host A sends an IP packet to host B, what will the destination address be in the frame when it leaves host A?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i274590v1n1_274590.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ BB:BB:BB:BB:BB:BB</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">When a host sends information to a distant network, the Layer 2 frame header will contain a source and destination MAC address. The source address will be the originating host device. The destination address will be the router interface that connects to the same network. In the case of host A sending information to host B, the source address is AA:AA:AA:AA:AA:AA and the destination address is the MAC address assigned to the R2 Ethernet interface, BB:BB:BB:BB:BB:BB.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="135" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q135 · Networking Trends</div>
+        <div class="q-text">What is a benefit of using cloud computing in networking?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Network capabilities are extended without requiring investment in new infrastructure, personnel, or software.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Cloud computing extends IT capabilities on-demand without requiring new hardware investment, training, or software licensing.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="136" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q136 · Addressing</div>
+        <div class="q-text">Which two statements are correct about MAC and IP addresses during data transmission if NAT is not involved? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Destination IP addresses in a packet remain constant along the entire path.</span><br><span class="correct-answer">✓ Destination and source MAC addresses change every time a frame goes from one LAN to another.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">IP addresses (Layer 3) stay constant end-to-end. MAC addresses (Layer 2) are local and change at every router hop.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="137" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q137 · Data Link Layer</div>
+        <div class="q-text">What is one main characteristic of the data link layer?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ It shields the upper layer protocol from being aware of the physical medium.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The data link layer abstracts the physical medium from upper layers, so higher-layer protocols don't need to know what type of media is being used.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="138" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q138 · Ethernet</div>
+        <div class="q-text">What are three characteristics of the CSMA/CD process? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ A device listens and waits until the media is not busy before transmitting.</span><br><span class="correct-answer">✓ After detecting a collision, hosts can attempt retransmission after a random time delay.</span><br><span class="correct-answer">✓ All devices on a segment see data that passes on the network medium.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">CSMA/CD: listen before transmit, detect collision → send jam signal → wait random time → retry. All devices on the segment see the transmitted data.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="139" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q139 · IOS CLI</div>
+        <div class="q-text">Which information does the show startup-config command display?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ the contents of the saved configuration file in the NVRAM</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">'show startup-config' displays the saved configuration in NVRAM. 'show running-config' shows the current active config in RAM.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="140" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q140 · Windows CLI</div>
+        <div class="q-text">Which two commands can be used on a Windows host to display the routing table? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ route print</span><br><span class="correct-answer">✓ netstat -r</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">'route print' and 'netstat -r' both display the routing table on a Windows host. 'show ip route' is a Cisco IOS command.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="141" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q141 · Network Layer</div>
+        <div class="q-text">What are two functions that are provided by the network layer? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ directing data packets to destination hosts on other networks</span><br><span class="correct-answer">✓ providing end devices with a unique network identifier</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The network layer (Layer 3) routes packets to remote networks and provides unique IP addresses to identify source and destination devices.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="142" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q142 · Subnetting</div>
+        <div class="q-text">Which two statements describe features of an IPv4 routing table on a router? (Choose two.)​</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ It stores information about routes derived from the active router interfaces.</span><br><span class="correct-answer">✓ If a default static route is configured in the router, an entry will be included in the routing table with source code S .</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The show ip route command is used to display the routing table of the router. In IPv4, directly connected interfaces will have one source code: C . The routing table stores information about directly connected routes and remote routes. An entry in the routing table with a source code of S is included if a default static route is configured on the router.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="143" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q143 · Security</div>
+        <div class="q-text">What characteristic describes a VPN?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ a tunneling protocol that provides remote users with secure access into the network of an organization</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A VPN creates encrypted tunnels to provide remote workers with secure access to an organization's internal network resources.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="144" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q144 · Switching</div>
+        <div class="q-text">Why would a Layer 2 switch need an IP address?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ to enable the switch to be managed remotely</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A switch needs an IP address (on its SVI/VLAN interface) only for remote management. Switches don't need IPs to forward frames.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="145" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q145 · IP Connectivity</div>
+        <div class="q-text">Match each description to its corresponding term. (Not all options are used.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ message encapsulation → placing one message format inside another</span><br><span class="correct-answer">✓ message sizing → breaking a long message into pieces before sending</span><br><span class="correct-answer">✓ message encoding → converting information into a transmittable format</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Three fundamentals of message formatting: encoding, encapsulation, sizing.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="146" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q146 · IPv6</div>
+        <div class="q-text">A user sends an HTTP request to a web server on a remote network. During encapsulation for this request, what information is added to the address field of a frame to indicate the destination?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ the MAC address of the default gateway</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A frame is encapsulated with source and destination MAC addresses. The source device will not know the MAC address of the remote host. An ARP request will be sent by the source and will be responded to by the router. The router will respond with the MAC address of its interface, the one which is connected to the same network as the source.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="147" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q147 · Protocols</div>
+        <div class="q-text">What is an advantage to using a protocol that is defined by an open standard?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ It encourages competition and promotes choices.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Open standards allow any vendor to implement the protocol, fostering competition, interoperability, and consumer choice.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="148" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q148 · Transport Layer</div>
+        <div class="q-text">Data is being sent from a source PC to a destination server. Which three statements correctly describe the function of TCP or UDP in this situation? (Choose three.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ The source port field identifies the running application that will handle returning data to the PC.</span><br><span class="correct-answer">✓ UDP segments are encapsulated within IP packets for transport.</span><br><span class="correct-answer">✓ The UDP destination port identifies the application on the server that will handle the data.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Source port tracks return traffic to the right app. Layer 4 segments are encapsulated in IP. Destination port identifies the server application.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="149" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q149 · Transport Layer</div>
+        <div class="q-text">Match each description with the corresponding TCP mechanism. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/20.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ number of bytes a destination device can accept and process at one time → window size</span><br><span class="correct-answer">✓ used to identify missing segments of data → sequence numbers</span><br><span class="correct-answer">✓ method of managing segments of data loss → retransmission</span><br><span class="correct-answer">✓ received by a sender before transmitting more segments in a session → acknowledgment</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">TCP window size controls flow (bytes accepted at once). Sequence numbers identify and order segments. Retransmission handles lost segments. Acknowledgments confirm receipt and signal the sender to continue.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="150" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q150 · Subnetting</div>
+        <div class="q-text">Refer to the exhibit. A company uses the address block of 128.107.0.0/16 for its network. What subnet mask would provide the maximum number of equal size subnets while providing enough host addresses for each subnet in the exhibit?</div><img src="https://itexamanswers.net/wp-content/uploads/2020/01/i207609v1n1_207609.png" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.128</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">The largest subnet in the topology has 100 hosts in it so the subnet mask must have at least 7 host bits in it (27-2=126). 255.255.255.0 has 8 hosts bits, but this does not meet the requirement of providing the maximum number of subnets.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="151" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q151 · Subnetting</div>
+        <div class="q-text">A network administrator wants to have the same subnet mask for three subnetworks at a small site. The site has the following networks and numbers of devices: Subnetwork A: IP phones – 10 addresses; Subnetwork B: PCs – 8 addresses; Subnetwork C: Printers – 2 addresses. What single subnet mask would be appropriate to use for the three subnetworks?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ 255.255.255.240</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">If the same mask is to be used, then the network with the most hosts must be examined for number of hosts. Because this is 10 hosts, 4 host bits are needed. The /28 or 255.255.255.240 subnet mask would be appropriate to use for these networks. ​</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="152" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q152 · Network Fundamentals</div>
+        <div class="q-text">Match each item to the type of topology diagram on which it is typically identified. (Not all options are used.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ physical topology → location of a desktop PC in a classroom; path of cables that connect rooms to wiring closets</span><br><span class="correct-answer">✓ logical topology → IP address of a server</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Physical topology = where devices/cabling physically are. Logical topology = addressing scheme and how data flows.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="153" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q153 · IOS CLI</div>
+        <div class="q-text">What two pieces of information are displayed in the output of the show ip interface brief command? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ IP addresses</span><br><span class="correct-answer">✓ Layer 1 statuses</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">'show ip interface brief' shows IP addresses assigned to interfaces and their Layer 1 (physical) and Layer 2 (protocol) operational status.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="154" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q154 · Troubleshooting</div>
+        <div class="q-text">A user is complaining that an external web page is taking longer than normal to load.The web page does eventually load on the user machine. Which tool should the technician use with administrator privileges in order to locate where the issue is in the network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ tracert</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Tracert (traceroute) maps the path to the destination and measures transit delays at each hop, helping identify where slowdowns occur.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="155" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q155 · IPv4</div>
+        <div class="q-text">Which value, that is contained in an IPv4 header field, is decremented by each router that receives a packet?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Time-to-Live</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Each router decrements the TTL field by 1. When it reaches 0, the router discards the packet and sends an ICMP Time Exceeded message to the sender.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="156" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q156 · Cabling</div>
+        <div class="q-text">A network technician is researching the use of fiber optic cabling in a new technology center. Which two issues should be considered before implementing fiber optic media? (Choose two.)</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ Fiber optic cabling requires different termination and splicing expertise than copper.</span><br><span class="correct-answer">✓ Fiber optic provides higher data capacity but is more expensive than copper cabling.</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">Fiber optic requires specialized termination/splicing skills, and has higher cost than copper — though it's immune to EMI/RFI.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="157" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q157 · Subnetting</div>
+        <div class="q-text">Match each description with an appropriate IP address. (Not all options are used.)</div><img src="https://itexamanswers.net/wp-content/uploads/2022/09/2022-09-22_165322.jpg" alt="Exhibit" style="max-width:100%;margin-top:0.6rem;border:1px solid var(--border);border-radius:4px;">
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWERS</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ experimental → 240.2.6.255</span><br><span class="correct-answer">✓ link-local → 169.254.1.5</span><br><span class="correct-answer">✓ public → 198.133.219.2</span><br><span class="correct-answer">✓ loopback → 127.0.0.1</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">240.0.0.0/4 reserved (experimental). 169.254.0.0/16 link-local. 127.0.0.0/8 loopback. The rest are public unless in private ranges.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="158" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q158 · Troubleshooting</div>
+        <div class="q-text">A user is executing a tracert to a remote device. At what point would a router, which is in the path to the destination device, stop forwarding the packet?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ when the value in the TTL field reaches zero</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">When a router decrements the TTL to 0, it drops the packet and sends an ICMP Time Exceeded message back to the source.</span>
+        </div>
+      </div>
+    </div>
+  </div><div class="flip-card" data-num="159" draggable="true">
+    <div class="drag-handle" title="Drag to move">⋮⋮</div>
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="q-num">Q159 · Security</div>
+        <div class="q-text">Users report that the network access is slow. After questioning the employees, the network administrator learned that one employee downloaded a third-party scanning program for the printer. What type of malware might be introduced that causes slow performance of the network?</div>
+        <div class="flip-hint">click to reveal →</div>
+      </div>
+      <div class="flip-card-back">
+        <div class="a-label">ANSWER</div>
+        <div class="a-text">
+          <span class="correct-answer">✓ worm</span>
+          <br><br>
+          <span style="color:#6b7280;font-size:0.78rem;">A worm is self-propagating malware that spreads across networks (often through downloaded programs) and consumes bandwidth, causing slow network performance.</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
   </section>
 
   <!-- STUDY VIEW -->
   <section class="view" id="view-study">
     <div class="stats">
-      <div class="stat">Due now: <strong id="study-due">0</strong></div>
-      <div class="stat">Studied today: <strong id="study-today">0</strong></div>
-      <div class="stat">Streak: <strong id="study-streak">0</strong>d</div>
-      <label class="auto-check-toggle" id="auto-check-toggle" onclick="toggleAutoCheck()">
+      <div class="stat">Due now: <strong id="study-due">5</strong></div>
+      <div class="stat">Studied today: <strong id="study-today">424</strong></div>
+      <div class="stat">Streak: <strong id="study-streak">1</strong>d</div>
+      <label class="auto-check-toggle on" id="auto-check-toggle" onclick="toggleAutoCheck()">
         <span class="dot"></span><span>Auto-check</span>
       </label>
     </div>
-    <div id="study-container"></div>
+    <div id="study-container">
+    <div class="study-card">
+      <div class="study-meta">
+        <span>Q83 · Data Link Layer</span>
+        <span class="due-tag">next review: due now · reps: 12</span>
+      </div>
+      <div class="study-q">What is a function of the data link layer?</div>
+      <div class="study-hint-line">// select one answer · auto-checks when complete</div>
+      <ul class="study-opts"><li class="" onclick="toggleStudyOpt('provides the formatting of data')"><span class="box"></span><span>provides the formatting of data</span></li><li class="" onclick="toggleStudyOpt('provides end-to-end delivery of data between hosts')"><span class="box"></span><span>provides end-to-end delivery of data between hosts</span></li><li class="" onclick="toggleStudyOpt('provides delivery of data between two applications')"><span class="box"></span><span>provides delivery of data between two applications</span></li><li class="" onclick="toggleStudyOpt('provides for the exchange of frames over a common local media')"><span class="box"></span><span>provides for the exchange of frames over a common local media</span></li></ul>
+      
+      
+    </div>
+  </div>
   </section>
 
   <!-- PROGRESS VIEW -->
   <section class="view" id="view-progress">
     <div class="progress-grid">
-      <div class="progress-stat"><div class="label">Total reviews</div><div class="value accent" id="p-total">0</div></div>
-      <div class="progress-stat"><div class="label">Unique questions</div><div class="value" id="p-unique">0</div></div>
-      <div class="progress-stat"><div class="label">Known well</div><div class="value accent" id="p-good">0</div></div>
+      <div class="progress-stat"><div class="label">Total reviews</div><div class="value accent" id="p-total">424</div></div>
+      <div class="progress-stat"><div class="label">Unique questions</div><div class="value" id="p-unique">159</div></div>
+      <div class="progress-stat"><div class="label">Known well</div><div class="value accent" id="p-good">154</div></div>
       <div class="progress-stat"><div class="label">Need work</div><div class="value bad" id="p-bad">0</div></div>
-      <div class="progress-stat"><div class="label">Current streak</div><div class="value warn" id="p-streak">0</div></div>
+      <div class="progress-stat"><div class="label">Current streak</div><div class="value warn" id="p-streak">1d</div></div>
     </div>
 
     <div class="chart-card">
       <h3>Reviews per day (last 14 days)</h3>
-      <div id="chart-daily"></div>
+      <div id="chart-daily">
+    <svg viewBox="0 0 700 220" preserveAspectRatio="xMidYMid meet">
+      <line x1="30" y1="150" x2="670" y2="150" stroke="var(--border)" stroke-dasharray="2 4"></line>
+            <text x="24" y="153" text-anchor="end" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="9">106</text><line x1="30" y1="110" x2="670" y2="110" stroke="var(--border)" stroke-dasharray="2 4"></line>
+            <text x="24" y="113" text-anchor="end" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="9">212</text><line x1="30" y1="70" x2="670" y2="70" stroke="var(--border)" stroke-dasharray="2 4"></line>
+            <text x="24" y="73" text-anchor="end" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="9">318</text><line x1="30" y1="30" x2="670" y2="30" stroke="var(--border)" stroke-dasharray="2 4"></line>
+            <text x="24" y="33" text-anchor="end" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="9">424</text>
+      <text x="52.85714285714286" y="210" text-anchor="middle" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="10">5/18</text><text x="372.85714285714283" y="210" text-anchor="middle" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="10">5/25</text><rect x="627.2857142857143" y="109.62264150943396" width="39.714285714285715" height="80.37735849056604" fill="var(--accent)" rx="2"></rect><rect x="627.2857142857143" y="83.20754716981132" width="39.714285714285715" height="26.41509433962264" fill="#ffb84f" rx="2"></rect><rect x="627.2857142857143" y="30" width="39.714285714285715" height="53.20754716981132" fill="#ff5a6e" rx="2"></rect><text x="647.1428571428572" y="210" text-anchor="middle" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="10">5/31</text>
+    </svg>
+    <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.8rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--text-muted);">
+      <span><span style="color:var(--accent)">■</span> Easy</span>
+      <span><span style="color:#ffb84f">■</span> Good</span>
+      <span><span style="color:#ff5a6e">■</span> Again</span>
+    </div>
+  </div>
     </div>
 
     <div class="chart-card">
       <h3>Mastery by topic</h3>
-      <div id="chart-topics"></div>
+      <div id="chart-topics">
+    <div class="topic-row">
+      <span class="name" title="Protocols">Protocols</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">4/4</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Wireless">Wireless</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">4/4</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="TCP/IP Model">TCP/IP Model</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">3/3</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="DNS">DNS</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">2/2</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Ports">Ports</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">9/9</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Windows CLI">Windows CLI</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">2/2</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Network Models">Network Models</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Security">Security</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">22/22</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="QoS">QoS</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="IPv6">IPv6</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">15/15</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Switching">Switching</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">5/5</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Routing">Routing</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">4/4</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Services">Services</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">9/9</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Subnetting">Subnetting</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">22/22</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="ARP">ARP</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">4/4</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Cabling">Cabling</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">5/5</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Transport Layer">Transport Layer</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">7/7</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="IOS CLI">IOS CLI</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">5/5</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="IPv4">IPv4</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">3/3</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Network Characteristics">Network Characteristics</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Troubleshooting">Troubleshooting</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">6/6</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="OSI Model">OSI Model</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">2/2</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Data Link Layer">Data Link Layer</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">5/5</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Automation">Automation</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">2/2</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Configuration">Configuration</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="NAT">NAT</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Application Layer">Application Layer</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="IPv4 vs IPv6">IPv4 vs IPv6</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Network Fundamentals">Network Fundamentals</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">2/2</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="IP Services">IP Services</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">3/3</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Addressing">Addressing</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">2/2</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="IP Connectivity">IP Connectivity</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">2/2</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Networking Trends">Networking Trends</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Ethernet">Ethernet</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  
+    <div class="topic-row">
+      <span class="name" title="Network Layer">Network Layer</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:100%"></span></span>
+      <span class="pct">1/1</span>
+    </div>
+  </div>
     </div>
 
     <div style="text-align:center;margin-top:1.5rem;">
@@ -739,8 +3714,8 @@
   </section>
 
   <!-- ============ EXAM VIEW ============ -->
-  <section class="view" id="view-exam">
-    <div id="exam-start">
+  <section class="view active" id="view-exam">
+    <div id="exam-start" style="display: none;">
       <div class="exam-start-screen">
         <h2>// Exam Mode</h2>
         <p class="sub">Simulate the real CCNA 1 final exam</p>
@@ -756,21 +3731,71 @@
         <button class="exam-start-btn" onclick="startExam()">Start Exam →</button>
       </div>
     </div>
-    <div id="exam-active" style="display:none;">
+    <div id="exam-active" style="display: none;">
       <div class="exam-header">
-        <div class="exam-timer" id="exam-timer">1:10:00</div>
-        <div class="exam-progress-bar"><div class="exam-progress-fill" id="exam-progress-fill" style="width:0%"></div></div>
-        <div class="exam-qcount" id="exam-qcount">Q 1 / 60</div>
+        <div class="exam-timer" id="exam-timer">1:09:26</div>
+        <div class="exam-progress-bar"><div class="exam-progress-fill" id="exam-progress-fill" style="width: 32%;"></div></div>
+        <div class="exam-qcount" id="exam-qcount">Q 19 / 60</div>
         <button class="exam-nav-btn" onclick="submitExam()" style="border-color:#ffb84f;color:#ffb84f;">Submit</button>
       </div>
-      <div class="exam-dot-nav" id="exam-dot-nav"></div>
-      <div id="exam-q-area"></div>
+      <div class="exam-dot-nav" id="exam-dot-nav"><button class="exam-dot answered" onclick="jumpExamQ(0)" title="Q1">1</button><button class="exam-dot" onclick="jumpExamQ(1)" title="Q2">2</button><button class="exam-dot" onclick="jumpExamQ(2)" title="Q3">3</button><button class="exam-dot" onclick="jumpExamQ(3)" title="Q4">4</button><button class="exam-dot" onclick="jumpExamQ(4)" title="Q5">5</button><button class="exam-dot" onclick="jumpExamQ(5)" title="Q6">6</button><button class="exam-dot" onclick="jumpExamQ(6)" title="Q7">7</button><button class="exam-dot" onclick="jumpExamQ(7)" title="Q8">8</button><button class="exam-dot" onclick="jumpExamQ(8)" title="Q9">9</button><button class="exam-dot" onclick="jumpExamQ(9)" title="Q10">10</button><button class="exam-dot" onclick="jumpExamQ(10)" title="Q11">11</button><button class="exam-dot" onclick="jumpExamQ(11)" title="Q12">12</button><button class="exam-dot" onclick="jumpExamQ(12)" title="Q13">13</button><button class="exam-dot" onclick="jumpExamQ(13)" title="Q14">14</button><button class="exam-dot" onclick="jumpExamQ(14)" title="Q15">15</button><button class="exam-dot" onclick="jumpExamQ(15)" title="Q16">16</button><button class="exam-dot answered" onclick="jumpExamQ(16)" title="Q17">17</button><button class="exam-dot" onclick="jumpExamQ(17)" title="Q18">18</button><button class="exam-dot current" onclick="jumpExamQ(18)" title="Q19">19</button><button class="exam-dot" onclick="jumpExamQ(19)" title="Q20">20</button><button class="exam-dot" onclick="jumpExamQ(20)" title="Q21">21</button><button class="exam-dot" onclick="jumpExamQ(21)" title="Q22">22</button><button class="exam-dot" onclick="jumpExamQ(22)" title="Q23">23</button><button class="exam-dot" onclick="jumpExamQ(23)" title="Q24">24</button><button class="exam-dot" onclick="jumpExamQ(24)" title="Q25">25</button><button class="exam-dot" onclick="jumpExamQ(25)" title="Q26">26</button><button class="exam-dot" onclick="jumpExamQ(26)" title="Q27">27</button><button class="exam-dot" onclick="jumpExamQ(27)" title="Q28">28</button><button class="exam-dot" onclick="jumpExamQ(28)" title="Q29">29</button><button class="exam-dot" onclick="jumpExamQ(29)" title="Q30">30</button><button class="exam-dot" onclick="jumpExamQ(30)" title="Q31">31</button><button class="exam-dot" onclick="jumpExamQ(31)" title="Q32">32</button><button class="exam-dot" onclick="jumpExamQ(32)" title="Q33">33</button><button class="exam-dot" onclick="jumpExamQ(33)" title="Q34">34</button><button class="exam-dot" onclick="jumpExamQ(34)" title="Q35">35</button><button class="exam-dot" onclick="jumpExamQ(35)" title="Q36">36</button><button class="exam-dot" onclick="jumpExamQ(36)" title="Q37">37</button><button class="exam-dot" onclick="jumpExamQ(37)" title="Q38">38</button><button class="exam-dot" onclick="jumpExamQ(38)" title="Q39">39</button><button class="exam-dot" onclick="jumpExamQ(39)" title="Q40">40</button><button class="exam-dot" onclick="jumpExamQ(40)" title="Q41">41</button><button class="exam-dot" onclick="jumpExamQ(41)" title="Q42">42</button><button class="exam-dot" onclick="jumpExamQ(42)" title="Q43">43</button><button class="exam-dot" onclick="jumpExamQ(43)" title="Q44">44</button><button class="exam-dot" onclick="jumpExamQ(44)" title="Q45">45</button><button class="exam-dot" onclick="jumpExamQ(45)" title="Q46">46</button><button class="exam-dot" onclick="jumpExamQ(46)" title="Q47">47</button><button class="exam-dot" onclick="jumpExamQ(47)" title="Q48">48</button><button class="exam-dot" onclick="jumpExamQ(48)" title="Q49">49</button><button class="exam-dot" onclick="jumpExamQ(49)" title="Q50">50</button><button class="exam-dot" onclick="jumpExamQ(50)" title="Q51">51</button><button class="exam-dot" onclick="jumpExamQ(51)" title="Q52">52</button><button class="exam-dot" onclick="jumpExamQ(52)" title="Q53">53</button><button class="exam-dot" onclick="jumpExamQ(53)" title="Q54">54</button><button class="exam-dot" onclick="jumpExamQ(54)" title="Q55">55</button><button class="exam-dot" onclick="jumpExamQ(55)" title="Q56">56</button><button class="exam-dot" onclick="jumpExamQ(56)" title="Q57">57</button><button class="exam-dot" onclick="jumpExamQ(57)" title="Q58">58</button><button class="exam-dot" onclick="jumpExamQ(58)" title="Q59">59</button><button class="exam-dot" onclick="jumpExamQ(59)" title="Q60">60</button></div>
+      <div id="exam-q-area">
+    <div class="exam-q-card">
+      <div class="exam-q-num">Question 19 of 60 · Subnetting</div>
+      <img src="https://itexamanswers.net/wp-content/uploads/2020/06/i304957v1n1_209418-1591171569.7915.png" class="exam-q-img" onerror="this.style.display='none'">
+      <div class="exam-q-text">Refer to the exhibit. A network engineer has been given the network address of 192.168.99.0 and a subnet mask of 255.255.255.192 to subnet across the four networks shown. How many total host addresses are unused across all four subnets?</div>
+      
+      <div class="exam-option" onclick="toggleExamOption('88')">
+      <span class="opt-letter">A.</span>
+      <span>88</span>
+    </div><div class="exam-option" onclick="toggleExamOption('200')">
+      <span class="opt-letter">B.</span>
+      <span>200</span>
+    </div><div class="exam-option" onclick="toggleExamOption('72')">
+      <span class="opt-letter">C.</span>
+      <span>72</span>
+    </div><div class="exam-option" onclick="toggleExamOption('224')">
+      <span class="opt-letter">D.</span>
+      <span>224</span>
+    </div><div class="exam-option" onclick="toggleExamOption('158')">
+      <span class="opt-letter">E.</span>
+      <span>158</span>
+    </div>
+    </div></div>
       <div class="exam-nav">
         <button class="exam-nav-btn" id="exam-prev-btn" onclick="examNav(-1)">← Prev</button>
         <button class="exam-nav-btn primary" id="exam-next-btn" onclick="examNav(1)">Next →</button>
       </div>
     </div>
-    <div id="exam-results" style="display:none;"></div>
+    <div id="exam-results" style="display: block;">
+    <div class="exam-results">
+      <div class="exam-score-ring">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="var(--border)" stroke-width="10"></circle>
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#ff5a6e" stroke-width="10" stroke-dasharray="339.29200658769764" stroke-dashoffset="339.29200658769764" stroke-linecap="round" style="transition:stroke-dashoffset 1s ease;"></circle>
+        </svg>
+        <div class="exam-score-inner">
+          <div class="exam-score-pct" style="color:#ff5a6e">0%</div>
+          <div class="exam-score-label">0/60</div>
+        </div>
+      </div>
+      <div class="exam-verdict fail">✗ FAILED</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text-muted);margin-bottom:1rem;">
+        You need 70% (42/60) to pass. Keep studying!
+      </div>
+      <div class="exam-result-stats">
+        <div class="exam-result-stat"><div class="ers-label">Correct</div><div class="ers-val" style="color:#22c55e">0</div></div>
+        <div class="exam-result-stat"><div class="ers-label">Wrong</div><div class="ers-val" style="color:#ff5a6e">60</div></div>
+        <div class="exam-result-stat"><div class="ers-label">Score</div><div class="ers-val" style="color:#ff5a6e">0%</div></div>
+        <div class="exam-result-stat"><div class="ers-label">Time</div><div class="ers-val" style="color:var(--text-muted);font-size:1rem;">0m 34s</div></div>
+      </div>
+      <div style="margin-bottom:2rem;">
+        <button class="exam-retry-btn" onclick="startExam()">Retry Exam</button>
+        <button class="exam-review-btn" onclick="showExamReview()">Review Wrong Answers (60)</button>
+        <button class="exam-review-btn" onclick="document.getElementById('exam-start').style.display='';document.getElementById('exam-results').style.display='none';">← Back</button>
+      </div>
+      <div id="exam-review-area"></div>
+    </div></div>
   </section>
 
   <footer>
@@ -1776,11 +4801,11 @@ const questions = [
   },
   {
     num: 122,
-    topic: "Network Access",
+    topic: "IP Services",
     q: "Which connector is used with twisted-pair cabling in an Ethernet LAN?",
-    opts: ["RJ-45", "RJ-11", "LC", "SC", "BNC"],
+    opts: [],
     a: ["RJ-45"],
-    explain: "RJ-45 is the standard connector for twisted-pair Ethernet (Cat5/5e/6). RJ-11 is used for telephone lines; LC and SC are fiber optic connectors; BNC is used with coaxial cable."
+    explain: "RJ-45 is the standard connector for twisted-pair Ethernet (Cat5/5e/6). RJ-11 is for telephones; LC/SC are fiber; BNC is coax."
   },
   {
     num: 123,
@@ -2785,7 +5810,6 @@ function startExam() {
   const pool = [...questions].sort(() => Math.random() - 0.5).slice(0, EXAM_Q_COUNT);
   examQuestions = pool;
   examAnswers = {};
-  examMatchState = {};
   examCurrentIdx = 0;
   examSecondsLeft = EXAM_TOTAL_SECONDS;
 
@@ -2827,45 +5851,17 @@ function updateExamTimer() {
 function renderExamDots() {
   const nav = document.getElementById('exam-dot-nav');
   nav.innerHTML = examQuestions.map((q, i) => {
-    const answered = examIsAnswered(i);
+    const answered = examAnswers[i] && examAnswers[i].size > 0;
     const isCurrent = i === examCurrentIdx;
     return `<button class="exam-dot${answered ? ' answered' : ''}${isCurrent ? ' current' : ''}"
       onclick="jumpExamQ(${i})" title="Q${i+1}">${i+1}</button>`;
   }).join('');
 }
 
-// Per-question matching state for exam (keyed by question index)
-let examMatchState = {}; // { [idx]: { left, right, selectedLeft, selectedRight, done } }
-
-function getExamMatchState(idx) {
-  if (!examMatchState[idx]) {
-    const q = examQuestions[idx];
-    const pairs = parseMatchingPairs(q.a);
-    examMatchState[idx] = {
-      pairs,
-      left: pairs.map((p, i) => ({ text: p.left, pairIdx: i })),
-      right: shuffleArray(pairs.map((p, i) => ({ text: p.right, pairIdx: i }))),
-      selectedLeft: null,
-      selectedRight: null,
-      done: {}
-    };
-  }
-  return examMatchState[idx];
-}
-
-function examIsAnswered(idx) {
-  const q = examQuestions[idx];
-  if (isMatchingQuestion(q)) {
-    const ms = examMatchState[idx];
-    if (!ms) return false;
-    return Object.keys(ms.done).length === ms.pairs.length;
-  }
-  return examAnswers[idx] && examAnswers[idx].size > 0;
-}
-
 function renderExamQuestion() {
   const q = examQuestions[examCurrentIdx];
   const total = examQuestions.length;
+  const answered = Object.values(examAnswers).filter(s => s && s.size > 0).length;
 
   document.getElementById('exam-qcount').textContent = `Q ${examCurrentIdx + 1} / ${total}`;
   const fillPct = ((examCurrentIdx + 1) / total * 100).toFixed(0);
@@ -2873,110 +5869,73 @@ function renderExamQuestion() {
   document.getElementById('exam-prev-btn').disabled = examCurrentIdx === 0;
   document.getElementById('exam-next-btn').textContent = examCurrentIdx === total - 1 ? 'Review →' : 'Next →';
 
+  const selected = examAnswers[examCurrentIdx] || new Set();
+  const letters = 'ABCDEFGHIJKLMNOP';
   const imgHtml = q.img ? `<img src="${q.img}" class="exam-q-img" onerror="this.style.display='none'">` : '';
 
-  let bodyHtml;
+  const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  // ===== Matching question branch =====
   if (isMatchingQuestion(q)) {
-    bodyHtml = renderExamMatchingUI(examCurrentIdx);
-  } else {
-    const selected = examAnswers[examCurrentIdx] || new Set();
-    const isMulti = q.a && q.a.length > 1;
-    const letters = 'ABCDEFGHIJKLMNOP';
-    const opts = (q.opts && q.opts.length > 0) ? q.opts : q.a;
-    const multiHint = isMulti
-      ? `<div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--accent2);margin-bottom:0.8rem;">Choose ${q.a.length} answers</div>`
-      : '';
-    const optsHtml = opts.map((opt, i) => {
-      const isSelected = selected.has(opt);
-      return `<div class="exam-option${isSelected ? ' selected' : ''}" onclick="toggleExamOption(${JSON.stringify(opt)})">
-        <span class="opt-letter">${letters[i]}.</span>
-        <span>${opt}</span>
+    const pairs = parseMatchingPairs(q.a);
+    // Pool of right-side options: prefer q.opts when provided, else derive from q.a
+    const rightsFromA = pairs.map(p => p.right);
+    let pool = (q.opts && q.opts.length > 0) ? [...q.opts] : [];
+    rightsFromA.forEach(r => { if (!pool.includes(r)) pool.push(r); });
+
+    const currentRightFor = (leftText) => {
+      for (const entry of selected) {
+        const idx = entry.indexOf('→');
+        if (idx >= 0 && entry.slice(0, idx).trim() === leftText) return entry.slice(idx + 1).trim();
+      }
+      return '';
+    };
+
+    const rowsHtml = pairs.map((p, li) => {
+      const current = currentRightFor(p.left);
+      const optionsHtml = `<option value="">— choose —</option>` +
+        pool.map(r => `<option value="${esc(r)}"${r === current ? ' selected' : ''}>${esc(r)}</option>`).join('');
+      return `<div class="exam-match-row">
+        <div class="exam-match-left">${esc(p.left)}</div>
+        <div class="exam-match-arrow">→</div>
+        <select class="exam-match-select${current ? ' has-value' : ''}" onchange="setExamMatchAnswer(${li}, this.value)">
+          ${optionsHtml}
+        </select>
       </div>`;
     }).join('');
-    bodyHtml = multiHint + optsHtml;
+
+    document.getElementById('exam-q-area').innerHTML = `
+      <div class="exam-q-card">
+        <div class="exam-q-num">Question ${examCurrentIdx + 1} of ${total} · ${q.topic}</div>
+        ${imgHtml}
+        <div class="exam-q-text">${q.q}</div>
+        <div class="exam-match-hint">Assign each item on the left to the correct match on the right (${pairs.length} pairs)</div>
+        ${rowsHtml}
+      </div>`;
+    return;
   }
+
+  // ===== Standard multiple-choice branch =====
+  const isMulti = q.a && q.a.length > 1;
+  const opts = (q.opts && q.opts.length > 0) ? q.opts : q.a;
+  const multiHint = isMulti ? `<div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--accent2);margin-bottom:0.8rem;">Choose ${q.a.length} answers</div>` : '';
+
+  const optsHtml = opts.map((opt, i) => {
+    const isSelected = selected.has(opt);
+    return `<div class="exam-option${isSelected ? ' selected' : ''}" onclick="toggleExamOption('${opt.replace(/'/g,"\\'")}')">
+      <span class="opt-letter">${letters[i]}.</span>
+      <span>${opt}</span>
+    </div>`;
+  }).join('');
 
   document.getElementById('exam-q-area').innerHTML = `
     <div class="exam-q-card">
       <div class="exam-q-num">Question ${examCurrentIdx + 1} of ${total} · ${q.topic}</div>
       ${imgHtml}
       <div class="exam-q-text">${q.q}</div>
-      ${bodyHtml}
+      ${multiHint}
+      ${optsHtml}
     </div>`;
-}
-
-function renderExamMatchingUI(idx) {
-  const ms = getExamMatchState(idx);
-  const { pairs, left, right, selectedLeft, selectedRight, done } = ms;
-  const total = pairs.length;
-  const doneCount = Object.keys(done).length;
-
-  const leftHTML = left.map((item, li) => {
-    const isDone = done[li] !== undefined;
-    let cls = isDone ? 'matched-correct matched-done' : (selectedLeft === li ? 'selected' : '');
-    const clickAttr = !isDone ? `onclick="examMatchSelectLeft(${idx},${li})"` : '';
-    return `<div class="match-item ${cls}" ${clickAttr}>${item.text}</div>`;
-  }).join('');
-
-  const rightHTML = right.map((item, ri) => {
-    const matchedLeftIdx = Object.entries(done).find(([li, pi]) => right[ri].pairIdx === Number(pi))?.[0];
-    const isDone = matchedLeftIdx !== undefined;
-    let cls = isDone ? 'matched-correct matched-done' : (selectedRight === ri ? 'selected' : '');
-    const clickAttr = !isDone ? `onclick="examMatchSelectRight(${idx},${ri})"` : '';
-    return `<div class="match-item ${cls}" ${clickAttr}>${item.text}</div>`;
-  }).join('');
-
-  const hint = doneCount === total
-    ? `<div class="matching-score perfect">✓ All matched!</div>`
-    : `<div class="study-hint-line">// Click a term, then its matching definition</div>`;
-
-  return `
-    <div class="matching-container">
-      <div class="matching-col">
-        <div class="matching-col-label">// Terms</div>
-        ${leftHTML}
-      </div>
-      <div class="matching-col">
-        <div class="matching-col-label">// Definitions</div>
-        ${rightHTML}
-      </div>
-    </div>
-    ${hint}`;
-}
-
-function examMatchSelectLeft(idx, li) {
-  const ms = getExamMatchState(idx);
-  if (ms.done[li] !== undefined) return;
-  if (ms.selectedLeft === li) { ms.selectedLeft = null; }
-  else {
-    ms.selectedLeft = li;
-    if (ms.selectedRight !== null) { examAttemptMatch(idx); return; }
-  }
-  renderExamQuestion();
-}
-
-function examMatchSelectRight(idx, ri) {
-  const ms = getExamMatchState(idx);
-  if (Object.values(ms.done).includes(ms.right[ri].pairIdx)) return;
-  if (ms.selectedRight === ri) { ms.selectedRight = null; }
-  else {
-    ms.selectedRight = ri;
-    if (ms.selectedLeft !== null) { examAttemptMatch(idx); return; }
-  }
-  renderExamQuestion();
-}
-
-function examAttemptMatch(idx) {
-  const ms = getExamMatchState(idx);
-  const li = ms.selectedLeft;
-  const ri = ms.selectedRight;
-  if (ms.left[li].pairIdx === ms.right[ri].pairIdx) {
-    ms.done[li] = ms.right[ri].pairIdx;
-  }
-  ms.selectedLeft = null;
-  ms.selectedRight = null;
-  renderExamQuestion();
-  renderExamDots();
 }
 
 function toggleExamOption(opt) {
@@ -2984,17 +5943,40 @@ function toggleExamOption(opt) {
   if (!examAnswers[examCurrentIdx]) examAnswers[examCurrentIdx] = new Set();
   const sel = examAnswers[examCurrentIdx];
   const isMulti = q.a && q.a.length > 1;
-  if (isMulti) { if (sel.has(opt)) sel.delete(opt); else sel.add(opt); }
-  else { sel.clear(); sel.add(opt); }
+
+  if (isMulti) {
+    if (sel.has(opt)) sel.delete(opt); else sel.add(opt);
+  } else {
+    sel.clear(); sel.add(opt);
+  }
   renderExamQuestion();
   renderExamDots();
 }
+
+function setExamMatchAnswer(li, rightText) {
+  const q = examQuestions[examCurrentIdx];
+  const pairs = parseMatchingPairs(q.a);
+  const leftText = pairs[li].left;
+  if (!examAnswers[examCurrentIdx]) examAnswers[examCurrentIdx] = new Set();
+  const sel = examAnswers[examCurrentIdx];
+  // Remove existing entry for this left
+  [...sel].forEach(e => {
+    const idx = e.indexOf('→');
+    if (idx >= 0 && e.slice(0, idx).trim() === leftText) sel.delete(e);
+  });
+  if (rightText) sel.add(`${leftText} → ${rightText}`);
+  // Re-render to update the "has-value" highlight + dot nav
+  renderExamQuestion();
+  renderExamDots();
+}
+
 
 function examNav(dir) {
   const next = examCurrentIdx + dir;
   if (next < 0) return;
   if (next >= examQuestions.length) {
-    const unanswered = examQuestions.filter((q, i) => !examIsAnswered(i)).length;
+    // Last question, next = review / submit prompt
+    const unanswered = examQuestions.length - Object.values(examAnswers).filter(s => s && s.size > 0).length;
     if (unanswered > 0) {
       if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
     }
@@ -3015,7 +5997,7 @@ function jumpExamQ(idx) {
 function submitExam(timeUp = false) {
   clearInterval(examTimerInterval);
   if (!timeUp) {
-    const unanswered = examQuestions.filter((q, i) => !examIsAnswered(i)).length;
+    const unanswered = examQuestions.length - Object.values(examAnswers).filter(s => s && s.size > 0).length;
     if (unanswered > 0 && !confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
       startExamTimer(); // resume
       return;
@@ -3025,32 +6007,12 @@ function submitExam(timeUp = false) {
   // Grade
   let correct = 0;
   const results = examQuestions.map((q, i) => {
-    let isCorrect = false;
-    let sel = [];
-
-    if (isMatchingQuestion(q)) {
-      const ms = examMatchState[i];
-      if (ms) {
-        // Build submitted pairs as "left → right" strings
-        const submittedPairs = Object.entries(ms.done).map(([li, pi]) => {
-          const leftText = ms.left[Number(li)].text;
-          const rightText = ms.pairs[pi].right;
-          return `${leftText} → ${rightText}`;
-        });
-        sel = submittedPairs;
-        // All pairs correct = full score for this question
-        const allCorrect = Object.keys(ms.done).length === ms.pairs.length &&
-          Object.entries(ms.done).every(([li, pi]) => ms.left[Number(li)].pairIdx === pi);
-        isCorrect = allCorrect;
-      }
-    } else {
-      sel = examAnswers[i] ? [...examAnswers[i]] : [];
-      const normalize = s => s.toLowerCase().replace(/\s+/g,' ').trim();
-      const correctSet = new Set(q.a.map(normalize));
-      const selSet = new Set(sel.map(normalize));
-      isCorrect = correctSet.size === selSet.size && [...correctSet].every(c => selSet.has(c));
-    }
-
+    const sel = examAnswers[i] ? [...examAnswers[i]] : [];
+    // Normalize answers for comparison
+    const normalize = s => s.toLowerCase().replace(/\s+/g,' ').trim();
+    const correctSet = new Set(q.a.map(normalize));
+    const selSet = new Set(sel.map(normalize));
+    const isCorrect = correctSet.size === selSet.size && [...correctSet].every(c => selSet.has(c));
     if (isCorrect) correct++;
     return { q, sel, isCorrect, correctAnswers: q.a };
   });
@@ -3114,29 +6076,20 @@ function showExamReview() {
   const results = window._examResults || [];
   const wrong = results.filter(r => !r.isCorrect);
   if (wrong.length === 0) {
-    document.getElementById('exam-review-area').innerHTML = '<p style="color:var(--accent);font-family:JetBrains Mono,monospace;font-size:0.8rem;text-align:center;">🎉 All answers correct!</p>';
+    document.getElementById('exam-review-area').innerHTML = '<p style="color:var(--accent);font-family:JetBrains Mono,monospace;font-size:0.8rem;">🎉 All answers correct!</p>';
     return;
   }
   document.getElementById('exam-review-area').innerHTML = `
     <div style="text-align:left;">
       <h3 style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;text-align:center;">Wrong Answers — ${wrong.length} question(s)</h3>
-      ${wrong.map(r => {
-        const isMatch = isMatchingQuestion(r.q);
-        const yourAnswer = isMatch
-          ? (r.sel.length > 0 ? r.sel.map(s => `<div style="margin:1px 0">• ${s}</div>`).join('') : '(no answer)')
-          : (r.sel.length > 0 ? r.sel.join(', ') : '(no answer)');
-        const correctAnswer = isMatch
-          ? r.correctAnswers.map(s => `<div style="margin:1px 0">• ${s}</div>`).join('')
-          : r.correctAnswers.join(', ');
-        return `
+      ${wrong.map((r, i) => `
         <div class="exam-review-card wrong">
-          <div class="exam-review-q">${r.q.q}</div>
+          <div class="exam-review-q"><strong style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--text-muted);">Q: </strong>${r.q.q}</div>
           ${r.q.img ? `<img src="${r.q.img}" style="max-width:100%;border-radius:4px;margin-bottom:0.5rem;" onerror="this.style.display='none'">` : ''}
-          <div class="exam-review-your">✗ Your answer: ${yourAnswer}</div>
-          <div class="exam-review-correct">✓ Correct: ${correctAnswer}</div>
+          <div class="exam-review-your">✗ Your answer: ${r.sel.length > 0 ? r.sel.join(', ') : '(no answer)'}</div>
+          <div class="exam-review-correct">✓ Correct: ${r.correctAnswers.join(', ')}</div>
           ${r.q.explain ? `<div class="exam-review-explain">${r.q.explain}</div>` : ''}
-        </div>`;
-      }).join('')}
+        </div>`).join('')}
     </div>`;
 }
 
@@ -3160,5 +6113,6 @@ init();
 
 
 </script>
-</body>
-</html>
+
+
+</body></html>

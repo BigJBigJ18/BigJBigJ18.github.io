@@ -714,6 +714,7 @@
     transition: all 0.15s;
   }
   .tc-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tc-btn.tc-btn-on { border-color: var(--accent); color: var(--accent); background: rgba(79,255,176,0.08); }
   .tc-btn .sep { color: var(--text-muted); margin: 0 0.25rem; }
   .tc-btn .on { color: var(--accent); font-weight: 600; }
 
@@ -742,6 +743,9 @@
 </head>
 <body>
 <div class="top-controls">
+  <button class="tc-btn" id="shuffle-toggle" onclick="toggleShuffleAnswers()" title="Shuffle answer order">
+    <span id="shuffle-icon">⇄</span> <span id="shuffle-label">Shuffle: Off</span>
+  </button>
   <button class="tc-btn" id="lang-toggle" onclick="toggleLang()" title="Sprache / Language">
     <span id="lang-de">DE</span><span class="sep">/</span><span id="lang-en" class="on">EN</span>
   </button>
@@ -843,7 +847,7 @@
           <div class="exam-info-card"><div class="eic-label">To Pass</div><div class="eic-val">42/60</div></div>
         </div>
         <p style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text-muted);margin-bottom:1.5rem;">
-          60 questions are randomly selected from all 159 questions.<br>Questions with multiple correct answers require all correct answers selected.
+          60 questions are randomly selected from the question bank (incl. exam-bank variants).<br>Questions with multiple correct answers require all correct answers selected.
         </p>
         <button class="exam-start-btn" onclick="startExam()">Start Exam →</button>
       </div>
@@ -2195,8 +2199,88 @@ const questions = [
     opts: ["virus", "worm", "phishing", "spam"],
     a: ["worm"],
     explain: "A worm is self-propagating malware that spreads across networks (often through downloaded programs) and consumes bandwidth, causing slow network performance."
-  }
-];
+  },
+  {
+    num: 160,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["responsible for internal structure of Ethernet frame", "applies source and destination MAC addresses to Ethernet frame", "handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data", "implements trailer with frame check sequence for error detection"],
+    a: ["handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data"],
+    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
+    variantOf: 55
+  },
+  {
+    num: 161,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "implements CSMA/CD over legacy shared half-duplex media", "adds Ethernet control information to network protocol data", "applies source and destination MAC addresses to Ethernet frame"],
+    a: ["places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "adds Ethernet control information to network protocol data"],
+    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
+    variantOf: 55
+  },
+  {
+    num: 162,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["enables IPv4 and IPv6 to utilize the same physical medium", "adds Ethernet control information to network protocol data", "applies source and destination MAC addresses to Ethernet frame", "responsible for the internal structure of Ethernet frame", "implements trailer with frame check sequence for error detection"],
+    a: ["enables IPv4 and IPv6 to utilize the same physical medium", "adds Ethernet control information to network protocol data"],
+    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
+    variantOf: 55
+  },
+  {
+    num: 163,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["enables IPv4 and IPv6 to utilize the same physical medium", "applies source and destination MAC addresses to Ethernet frame", "integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "handles communication between upper layer networking software and Ethernet NIC hardware", "responsible for internal structure of Ethernet frame"],
+    a: ["enables IPv4 and IPv6 to utilize the same physical medium", "handles communication between upper layer networking software and Ethernet NIC hardware"],
+    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
+    variantOf: 55
+  },
+  {
+    num: 164,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "adds Ethernet control information to network protocol data", "responsible for internal structure of Ethernet frame", "enables IPv4 and IPv6 to utilize the same physical medium", "implements trailer with frame check sequence for error detection"],
+    a: ["responsible for internal structure of Ethernet frame", "implements trailer with frame check sequence for error detection"],
+    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
+    variantOf: 77
+  },
+  {
+    num: 165,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "enables IPv4 and IPv6 to utilize the same physical medium", "handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data", "implements CSMA/CD over legacy shared half-duplex media"],
+    a: ["integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "implements CSMA/CD over legacy shared half-duplex media"],
+    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
+    variantOf: 77
+  },
+  {
+    num: 166,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "adds Ethernet control information to network protocol data", "implements trailer with frame check sequence for error detection", "handles communication between upper layer networking software and Ethernet NIC hardware"],
+    a: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "implements trailer with frame check sequence for error detection"],
+    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
+    variantOf: 77
+  },
+  {
+    num: 167,
+    topic: "Data Link Layer",
+    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
+    opts: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "applies source and destination MAC addresses to Ethernet frame", "places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data"],
+    a: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "applies source and destination MAC addresses to Ethernet frame"],
+    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
+    variantOf: 77
+  },
+  {
+    num: 168,
+    topic: "Subnetting",
+    q: "Which two statements describe features of an IPv4 routing table on a router? (Choose two.)​",
+    opts: ["The netstat -r command can be used to display the routing table of a router.​", "The routing table stores information about routes derived from the active router interfaces.", "The routing table lists the MAC addresses of each active interface.", "Directly connected interfaces will have two route source codes in the routing table: C and S .", "If a default static route is configured in the router, an entry will be included in the routing table with source code S"],
+    a: ["The routing table stores information about routes derived from the active router interfaces.", "If a default static route is configured in the router, an entry will be included in the routing table with source code S"],
+    explain: "IPv4 routing table variant — alternate option set from the exam bank. (Variation of Q142.)",
+    variantOf: 142
+  }];
 
 const topics = [...new Set(questions.map(q => q.topic))].sort();
 let flippedCards = new Set();
@@ -2354,6 +2438,60 @@ let history = (() => { try { return JSON.parse(localStorage.getItem(HIST_KEY) ||
 let currentStudyQ = null;
 let studyRevealed = false;
 let studySelected = new Set();
+
+/* ===== Answer-shuffle toggle ===== */
+let shuffleAnswers = (() => { try { return localStorage.getItem('networking-flashcards-shuffle-v1') === '1'; } catch { return false; } })();
+let _shuffledOptsCache = {};
+function _shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function getDisplayOpts(q) {
+  if (!q || !q.opts) return q && q.opts || [];
+  if (!shuffleAnswers) return q.opts;
+  if (!_shuffledOptsCache[q.num] || _shuffledOptsCache[q.num].srcLen !== q.opts.length) {
+    _shuffledOptsCache[q.num] = { srcLen: q.opts.length, opts: _shuffleArray(q.opts) };
+  }
+  return _shuffledOptsCache[q.num].opts;
+}
+function updateShuffleUI() {
+  const lbl = document.getElementById('shuffle-label');
+  const btn = document.getElementById('shuffle-toggle');
+  if (lbl) lbl.textContent = 'Shuffle: ' + (shuffleAnswers ? 'On' : 'Off');
+  if (btn) btn.classList.toggle('tc-btn-on', shuffleAnswers);
+}
+function toggleShuffleAnswers() {
+  shuffleAnswers = !shuffleAnswers;
+  try { localStorage.setItem('networking-flashcards-shuffle-v1', shuffleAnswers ? '1' : '0'); } catch {}
+  // Reset cache so a fresh shuffle is produced (or originals are restored).
+  _shuffledOptsCache = {};
+  // Reshuffle exam questions in-place if exam is active.
+  if (typeof examQuestions !== 'undefined' && Array.isArray(examQuestions)) {
+    // no-op: getDisplayOpts handles it lazily for renderExamQuestion
+  }
+  updateShuffleUI();
+  if (typeof rerenderCurrentViews === 'function') rerenderCurrentViews();
+  else if (typeof renderStudy === 'function') renderStudy();
+}
+
+/* ===== Repeat queue: cards marked "Again" come back sooner ===== */
+let _repeatQueue = []; // [{ num, dueAfterPick }]
+let _studyPickCounter = 0;
+function _queueRepeat(num) {
+  // Re-show after a couple of other cards so the user actually re-encounters it.
+  _repeatQueue = _repeatQueue.filter(r => r.num !== num);
+  _repeatQueue.push({ num, dueAfterPick: _studyPickCounter + 2 });
+}
+function _popRepeatReady() {
+  const idx = _repeatQueue.findIndex(r => r.dueAfterPick <= _studyPickCounter);
+  if (idx === -1) return null;
+  const item = _repeatQueue.splice(idx, 1)[0];
+  return questions.find(q => q.num === item.num) || null;
+}
 let autoCheck = (() => { try { return localStorage.getItem('networking-flashcards-autocheck-v1') === '1'; } catch { return false; } })();
 
 function toggleAutoCheck() {
@@ -2402,6 +2540,9 @@ function getDueQuestions() {
 }
 
 function pickNextStudyQ() {
+  _studyPickCounter++;
+  const fromRepeat = _popRepeatReady();
+  if (fromRepeat) return fromRepeat;
   const now = Date.now();
   const due = getDueQuestions();
   if (due.length > 0) {
@@ -2446,8 +2587,11 @@ function rateQuestion(rating) {
   saveSR();
   history.push({ t: Date.now(), num, rating });
   saveHist();
+  if (rating === 1) _queueRepeat(num);
   studyRevealed = false;
   studySelected = new Set();
+  // Force re-shuffle of options on next encounter of this card.
+  delete _shuffledOptsCache[num];
   currentStudyQ = pickNextStudyQ();
   renderStudy();
 }
@@ -2674,7 +2818,7 @@ function renderStudy() {
   const multi = q.a.length > 1;
   const noOpts = !q.opts || q.opts.length === 0;
 
-  const optsHTML = (q.opts || []).map(o => {
+  const optsHTML = getDisplayOpts(q).map(o => {
     const isCorrect = correctSet.has(o);
     const isSelected = studySelected.has(o);
     let cls = '';
@@ -3008,7 +3152,7 @@ function renderExamQuestion() {
 
   // ===== Standard multiple-choice branch =====
   const isMulti = q.a && q.a.length > 1;
-  const opts = (q.opts && q.opts.length > 0) ? q.opts : q.a;
+  const opts = (q.opts && q.opts.length > 0) ? getDisplayOpts(q) : q.a;
   const multiHint = isMulti ? `<div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--accent2);margin-bottom:0.8rem;">Choose ${q.a.length} answers</div>` : '';
 
   const optsHtml = opts.map((opt, i) => {
@@ -3201,6 +3345,7 @@ document.querySelectorAll('.nav-tab').forEach(t => {
 });
 
 init();
+try { updateShuffleUI(); } catch(e) {}
 
 /* ============ THEME + LANGUAGE TOGGLE ============ */
 const I18N = {
@@ -3216,7 +3361,7 @@ const I18N = {
     resetBtn: '// Reset all progress',
     examTitle: '// Exam Mode', examSub: 'Simulate the real CCNA 1 final exam',
     eicQuestions: 'Questions', eicTime: 'Time Limit', eicPass: 'Pass Score', eicTopass: 'To Pass',
-    examIntro: '60 questions are randomly selected from all 159 questions.<br>Questions with multiple correct answers require all correct answers selected.',
+    examIntro: '60 questions are randomly selected from the question bank (incl. exam-bank variants).<br>Questions with multiple correct answers require all correct answers selected.',
     examStartBtn: 'Start Exam →', examSubmit: 'Submit', examPrev: '← Prev', examNext: 'Next →',
     footer: 'Cisco CCNA / ITN v7 — Tap any card to flip · Drag the ⋮⋮ handle to move',
     themeLabel: 'Dark', themeLabelLight: 'Light'

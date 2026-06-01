@@ -6454,7 +6454,7 @@ applyLang();
 
 <!-- ============ LEADERBOARD + USERNAME GATE ============ -->
 <script type="module">
-  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
   const SUPABASE_URL = 'https://ivxpogsleffsjmxsalxd.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml2eHBvZ3NsZWZmc2pteHNhbHhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMjQyNzgsImV4cCI6MjA5NTkwMDI3OH0.T1AmB_H612C1dYhkIif1xNAFPFt0tg9N6OkxL3JceGs';

@@ -1,4 +1,4 @@
-UPDATE KOMMT BALD
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -737,6 +737,200 @@ UPDATE KOMMT BALD
       linear-gradient(rgba(10,143,92,0.04) 1px, transparent 1px),
       linear-gradient(90deg, rgba(10,143,92,0.04) 1px, transparent 1px);
   }
+
+  /* ===== Cisco perspective (exam view only) =====
+     Mimics the real Cisco Netacad final-exam UI. Scoped to #view-exam so
+     the rest of the app keeps its own design. */
+  body.cisco #view-exam {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #c8ced4;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 0;
+  }
+  body.cisco #view-exam * { font-family: Arial, Helvetica, sans-serif; letter-spacing: normal; }
+  body.cisco #view-exam .exam-start-screen { background: #fff; color: #1a1a1a; padding: 2.5rem 1.5rem; }
+  body.cisco #view-exam .exam-start-screen h2 { color: #1a1a1a; font-weight: 700; font-size: 1.6rem; }
+  body.cisco #view-exam .exam-start-screen .sub { color: #555; font-size: 0.85rem; }
+  body.cisco #view-exam .exam-info-card { background: #f4f6f9; border: 1px solid #c8ced4; color: #1a1a1a; border-radius: 2px; }
+  body.cisco #view-exam .exam-info-card .eic-label { color: #555; }
+  body.cisco #view-exam .exam-info-card .eic-val { color: #1d428a; font-family: Arial, Helvetica, sans-serif; }
+  body.cisco #view-exam .exam-start-btn { background: #1d428a; color: #fff; border-radius: 2px; font-family: Arial, Helvetica, sans-serif; font-weight: 600; }
+  body.cisco #view-exam .exam-start-btn:hover { background: #15366f; opacity: 1; }
+
+  body.cisco #view-exam #exam-active::before {
+    content: "cisco";
+    display: block;
+    background: #1d428a;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    padding: 0.7rem 1.2rem;
+  }
+  body.cisco #view-exam .exam-header {
+    background: #f4f6f9;
+    border-bottom: 1px solid #c8ced4;
+    padding: 0.6rem 1.2rem;
+    margin: 0 0 1rem;
+  }
+  body.cisco #view-exam .exam-timer { color: #1d428a; font-size: 1rem; font-weight: 700; }
+  body.cisco #view-exam .exam-timer.warn { color: #b97b00; }
+  body.cisco #view-exam .exam-timer.danger { color: #c8102e; }
+  body.cisco #view-exam .exam-progress-bar { background: #e1e5ea; }
+  body.cisco #view-exam .exam-progress-fill { background: #1d428a; }
+  body.cisco #view-exam .exam-qcount { color: #1a1a1a; font-size: 0.85rem; }
+
+  body.cisco #view-exam .exam-dot-nav { padding: 0 1.2rem; }
+  body.cisco #view-exam .exam-dot { background: #fff; border: 1px solid #c8ced4; color: #555; }
+  body.cisco #view-exam .exam-dot.answered { background: #1d428a; border-color: #1d428a; color: #fff; }
+  body.cisco #view-exam .exam-dot.current { border-color: #c8102e; box-shadow: 0 0 0 2px rgba(200,16,46,0.25); color: #c8102e; }
+
+  body.cisco #view-exam #exam-q-area { padding: 0 1.2rem; }
+  body.cisco #view-exam .exam-q-card { background: #fff; border: none; padding: 0; }
+  body.cisco #view-exam .exam-q-num { color: #555; font-weight: 700; }
+  body.cisco #view-exam .exam-q-text { color: #1a1a1a; font-size: 1rem; line-height: 1.55; }
+  body.cisco #view-exam .exam-option {
+    background: #fff;
+    border: 1px solid #c8ced4;
+    border-radius: 2px;
+    color: #1a1a1a;
+    padding: 0.7rem 0.9rem;
+  }
+  body.cisco #view-exam .exam-option:hover { background: #eef3fb; border-color: #1d428a; }
+  body.cisco #view-exam .exam-option.selected { background: #e7eef9; border-color: #1d428a; color: #1a1a1a; }
+  body.cisco #view-exam .exam-option .opt-letter { color: #1d428a; font-weight: 700; }
+
+  body.cisco #view-exam .exam-nav { padding: 0 1.2rem; }
+  body.cisco #view-exam .exam-nav-btn {
+    background: #fff; border: 1px solid #1d428a; color: #1d428a;
+    border-radius: 2px; font-weight: 600;
+  }
+  body.cisco #view-exam .exam-nav-btn:hover { background: #1d428a; color: #fff; }
+  body.cisco #view-exam .exam-nav-btn.primary { background: #1d428a; color: #fff; }
+  body.cisco #view-exam .exam-nav-btn.primary:hover { background: #15366f; }
+  body.cisco #view-exam .exam-submit-btn { background: #c8102e; color: #fff; border-radius: 2px; }
+  body.cisco #view-exam .exam-submit-btn:hover { background: #a40d25; opacity: 1; }
+
+  body.cisco #view-exam .exam-match-select { background: #fff; border: 1px solid #c8ced4; color: #1a1a1a; }
+  body.cisco #view-exam .exam-match-select.has-value { background: #e7eef9; border-color: #1d428a; color: #1d428a; }
+  body.cisco #view-exam .exam-match-left { background: #f4f6f9; color: #1a1a1a; border: 1px solid #c8ced4; }
+
+  body.cisco #view-exam .exam-review-card { background: #fff; color: #1a1a1a; border: 1px solid #c8ced4; }
+  body.cisco #view-exam .exam-verdict.pass { color: #2e7d32; }
+  body.cisco #view-exam .exam-verdict.fail { color: #c8102e; }
+  body.cisco #view-exam .exam-result-stat { background: #f4f6f9; border: 1px solid #c8ced4; color: #1a1a1a; }
+
+  /* ===== Leaderboard ===== */
+  .lb-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; }
+  .lb-head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+  .lb-title { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.06em; }
+  .lb-live { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent); display: inline-flex; align-items: center; gap: 0.4rem; }
+  .lb-live::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 1.4s ease-in-out infinite; }
+  .lb-table { width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+  .lb-table th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--border); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .lb-table td { padding: 0.65rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text); }
+  .lb-table tr.me td { background: rgba(79,255,176,0.07); color: var(--accent); }
+  .lb-table tr:last-child td { border-bottom: none; }
+  .lb-rank { color: var(--text-muted); width: 2.5rem; }
+  .lb-rank.gold { color: #ffd35c; }
+  .lb-rank.silver { color: #c8d0dc; }
+  .lb-rank.bronze { color: #e09b5e; }
+  .lb-empty { padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+  .lb-pct { font-weight: 700; }
+  .lb-pct.pass { color: #22c55e; }
+  .lb-pct.fail { color: #ff5a6e; }
+  .lb-flash { animation: lbflash 1.6s ease-out; }
+  @keyframes lbflash { 0% { background: rgba(79,255,176,0.35); } 100% { background: transparent; } }
+
+  /* ===== Username gate (modal) ===== */
+  .gate-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(13,15,20,0.92); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center; padding: 1.2rem;
+  }
+  body.light .gate-overlay { background: rgba(245,246,248,0.95); }
+  .gate-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 2rem 1.6rem; max-width: 420px; width: 100%; text-align: center;
+  }
+  .gate-card h2 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text); }
+  .gate-card p { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5; }
+  .gate-card input {
+    width: 100%; padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem; margin-bottom: 0.8rem; text-align: center; letter-spacing: 0.04em;
+  }
+  .gate-card input:focus { outline: none; border-color: var(--accent); }
+  .gate-card button {
+    width: 100%; padding: 0.8rem; background: var(--accent); color: #0d0f14;
+    border: none; border-radius: 6px; font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.95rem; cursor: pointer; transition: opacity 0.15s;
+  }
+  .gate-card button:hover { opacity: 0.85; }
+  .gate-card button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .gate-status { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--accent2); margin-top: 0.8rem; min-height: 1rem; }
+  .gate-status.found { color: var(--accent); }
+  .gate-status.error { color: #ff5a6e; }
+
+  .tc-user { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* ===== Mobile-friendly tweaks ===== */
+  @media (max-width: 640px) {
+    body { padding: 1rem 0.6rem; }
+    .wrapper { max-width: 100%; }
+    header { margin-bottom: 1.4rem; }
+    header h1 { font-size: 1.6rem; }
+    header p { font-size: 0.7rem; }
+
+    /* Top controls: compact + wrap */
+    .top-controls {
+      position: static;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem;
+      margin: 0 0 1rem; padding: 0 0.2rem;
+    }
+    .tc-btn { font-size: 0.65rem; padding: 0.4rem 0.55rem; }
+    .tc-user { max-width: 110px; }
+
+    /* Nav tabs become horizontal scroller */
+    .nav-tabs {
+      flex-wrap: nowrap; justify-content: flex-start;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      margin: 0 -0.6rem 1.2rem; padding: 0 0.6rem 0.4rem;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab { flex: 0 0 auto; padding: 0.5rem 0.9rem; font-size: 0.7rem; }
+
+    .stats { gap: 0.4rem; margin-bottom: 1.2rem; }
+    .stat { font-size: 0.7rem; padding: 0.3rem 0.65rem; }
+
+    .filters { gap: 0.35rem; margin-bottom: 1.2rem; }
+    .filter-btn { font-size: 0.65rem; padding: 0.3rem 0.65rem; }
+
+    .study-card { padding: 1.2rem; min-height: 280px; }
+
+    .exam-header { gap: 0.5rem; padding-bottom: 0.7rem; margin-bottom: 1rem; }
+    .exam-timer { font-size: 1.1rem; }
+    .exam-progress-bar { flex-basis: 100%; order: 3; }
+    .exam-qcount { font-size: 0.7rem; }
+    .exam-q-card { padding: 1.1rem; }
+    .exam-q-text { font-size: 0.92rem; }
+    .exam-option { font-size: 0.82rem; padding: 0.7rem; }
+    .exam-nav-btn { padding: 0.55rem 0.9rem; font-size: 0.72rem; }
+    .exam-dot { width: 26px; height: 26px; font-size: 0.6rem; }
+
+    .lb-table { font-size: 0.7rem; }
+    .lb-table th, .lb-table td { padding: 0.5rem 0.35rem; }
+    .lb-table .lb-hide-mobile { display: none; }
+    .lb-rank { width: 1.8rem; }
+
+    footer { font-size: 0.65rem !important; padding: 1rem 0.5rem !important; }
+  }
+
 </style>
 
 
@@ -753,6 +947,20 @@ UPDATE KOMMT BALD
   <button class="tc-btn" id="theme-toggle" onclick="toggleTheme()" title="Theme">
     <span id="theme-icon">☾</span> <span id="theme-label">Dark</span>
   </button>
+  <button class="tc-btn tc-user" id="user-btn" onclick="openUsernameGate()" title="Change username" style="display:none;">
+    👤 <span id="user-name">—</span>
+  </button>
+</div>
+
+<!-- Username gate -->
+<div class="gate-overlay" id="username-gate" style="display:none;">
+  <div class="gate-card">
+    <h2>Enter your username</h2>
+    <p>Used to track your stats on the live leaderboard.<br>2–24 characters. No login needed.</p>
+    <input type="text" id="username-input" maxlength="24" placeholder="e.g. neo_42" autocomplete="off" spellcheck="false">
+    <button id="username-submit" onclick="submitUsername()">Continue →</button>
+    <div class="gate-status" id="username-status"></div>
+  </div>
 </div>
 <div class="wrapper">
 
@@ -765,6 +973,7 @@ UPDATE KOMMT BALD
     <button class="nav-tab active" data-view="browse">// Browse</button>
     <button class="nav-tab" data-view="study">// Study</button>
     <button class="nav-tab" data-view="progress">// Progress</button>
+    <button class="nav-tab" data-view="leaderboard">// Leaderboard</button>
     <button class="nav-tab" data-view="exam">// Exam</button>
   </nav>
 
@@ -835,6 +1044,17 @@ UPDATE KOMMT BALD
     </div>
   </section>
 
+  <!-- ============ LEADERBOARD VIEW ============ -->
+  <section class="view" id="view-leaderboard">
+    <div class="lb-wrap">
+      <div class="lb-head">
+        <div class="lb-title">// Top 50 by best score</div>
+        <span class="lb-live">LIVE</span>
+      </div>
+      <div id="lb-content"><div class="lb-empty">Loading…</div></div>
+    </div>
+  </section>
+
   <!-- ============ EXAM VIEW ============ -->
   <section class="view" id="view-exam">
     <div id="exam-start">
@@ -848,7 +1068,7 @@ UPDATE KOMMT BALD
           <div class="exam-info-card"><div class="eic-label">To Pass</div><div class="eic-val">42/60</div></div>
         </div>
         <p style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text-muted);margin-bottom:1.5rem;">
-          60 questions are randomly selected from the question bank (incl. exam-bank variants).<br>Questions with multiple correct answers require all correct answers selected.
+          60 questions are randomly selected from all 159 questions.<br>Questions with multiple correct answers require all correct answers selected.
         </p>
         <button class="exam-start-btn" onclick="startExam()">Start Exam →</button>
       </div>
@@ -2200,88 +2420,8 @@ const questions = [
     opts: ["virus", "worm", "phishing", "spam"],
     a: ["worm"],
     explain: "A worm is self-propagating malware that spreads across networks (often through downloaded programs) and consumes bandwidth, causing slow network performance."
-  },
-  {
-    num: 160,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["responsible for internal structure of Ethernet frame", "applies source and destination MAC addresses to Ethernet frame", "handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data", "implements trailer with frame check sequence for error detection"],
-    a: ["handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data"],
-    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
-    variantOf: 55
-  },
-  {
-    num: 161,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "implements CSMA/CD over legacy shared half-duplex media", "adds Ethernet control information to network protocol data", "applies source and destination MAC addresses to Ethernet frame"],
-    a: ["places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "adds Ethernet control information to network protocol data"],
-    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
-    variantOf: 55
-  },
-  {
-    num: 162,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["enables IPv4 and IPv6 to utilize the same physical medium", "adds Ethernet control information to network protocol data", "applies source and destination MAC addresses to Ethernet frame", "responsible for the internal structure of Ethernet frame", "implements trailer with frame check sequence for error detection"],
-    a: ["enables IPv4 and IPv6 to utilize the same physical medium", "adds Ethernet control information to network protocol data"],
-    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
-    variantOf: 55
-  },
-  {
-    num: 163,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the LLC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["enables IPv4 and IPv6 to utilize the same physical medium", "applies source and destination MAC addresses to Ethernet frame", "integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "handles communication between upper layer networking software and Ethernet NIC hardware", "responsible for internal structure of Ethernet frame"],
-    a: ["enables IPv4 and IPv6 to utilize the same physical medium", "handles communication between upper layer networking software and Ethernet NIC hardware"],
-    explain: "LLC sublayer variant — alternate option set from the exam bank. (Variation of Q55.)",
-    variantOf: 55
-  },
-  {
-    num: 164,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "adds Ethernet control information to network protocol data", "responsible for internal structure of Ethernet frame", "enables IPv4 and IPv6 to utilize the same physical medium", "implements trailer with frame check sequence for error detection"],
-    a: ["responsible for internal structure of Ethernet frame", "implements trailer with frame check sequence for error detection"],
-    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
-    variantOf: 77
-  },
-  {
-    num: 165,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "enables IPv4 and IPv6 to utilize the same physical medium", "handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data", "implements CSMA/CD over legacy shared half-duplex media"],
-    a: ["integrates Layer 2 flows between 10 Gigabit Ethernet over fiber and 1 Gigabit Ethernet over copper", "implements CSMA/CD over legacy shared half-duplex media"],
-    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
-    variantOf: 77
-  },
-  {
-    num: 166,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "adds Ethernet control information to network protocol data", "implements trailer with frame check sequence for error detection", "handles communication between upper layer networking software and Ethernet NIC hardware"],
-    a: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "implements trailer with frame check sequence for error detection"],
-    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
-    variantOf: 77
-  },
-  {
-    num: 167,
-    topic: "Data Link Layer",
-    q: "Which two functions are performed at the MAC sublayer of the OSI Data Link Layer to facilitate Ethernet communication? (Choose two.)",
-    opts: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "applies source and destination MAC addresses to Ethernet frame", "places information in the Ethernet frame that identifies which network layer protocol is being encapsulated by the frame", "handles communication between upper layer networking software and Ethernet NIC hardware", "adds Ethernet control information to network protocol data"],
-    a: ["applies delimiting of Ethernet frame fields to synchronize communication between nodes", "applies source and destination MAC addresses to Ethernet frame"],
-    explain: "MAC sublayer variant — alternate option set from the exam bank. (Variation of Q77.)",
-    variantOf: 77
-  },
-  {
-    num: 168,
-    topic: "Subnetting",
-    q: "Which two statements describe features of an IPv4 routing table on a router? (Choose two.)​",
-    opts: ["The netstat -r command can be used to display the routing table of a router.​", "The routing table stores information about routes derived from the active router interfaces.", "The routing table lists the MAC addresses of each active interface.", "Directly connected interfaces will have two route source codes in the routing table: C and S .", "If a default static route is configured in the router, an entry will be included in the routing table with source code S"],
-    a: ["The routing table stores information about routes derived from the active router interfaces.", "If a default static route is configured in the router, an entry will be included in the routing table with source code S"],
-    explain: "IPv4 routing table variant — alternate option set from the exam bank. (Variation of Q142.)",
-    variantOf: 142
-  }];
+  }
+];
 
 const topics = [...new Set(questions.map(q => q.topic))].sort();
 let flippedCards = new Set();
@@ -2439,60 +2579,6 @@ let history = (() => { try { return JSON.parse(localStorage.getItem(HIST_KEY) ||
 let currentStudyQ = null;
 let studyRevealed = false;
 let studySelected = new Set();
-
-/* ===== Answer-shuffle toggle ===== */
-let shuffleAnswers = (() => { try { return localStorage.getItem('networking-flashcards-shuffle-v1') === '1'; } catch { return false; } })();
-let _shuffledOptsCache = {};
-function _shuffleArray(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-function getDisplayOpts(q) {
-  if (!q || !q.opts) return q && q.opts || [];
-  if (!shuffleAnswers) return q.opts;
-  if (!_shuffledOptsCache[q.num] || _shuffledOptsCache[q.num].srcLen !== q.opts.length) {
-    _shuffledOptsCache[q.num] = { srcLen: q.opts.length, opts: _shuffleArray(q.opts) };
-  }
-  return _shuffledOptsCache[q.num].opts;
-}
-function updateShuffleUI() {
-  const lbl = document.getElementById('shuffle-label');
-  const btn = document.getElementById('shuffle-toggle');
-  if (lbl) lbl.textContent = 'Shuffle: ' + (shuffleAnswers ? 'On' : 'Off');
-  if (btn) btn.classList.toggle('tc-btn-on', shuffleAnswers);
-}
-function toggleShuffleAnswers() {
-  shuffleAnswers = !shuffleAnswers;
-  try { localStorage.setItem('networking-flashcards-shuffle-v1', shuffleAnswers ? '1' : '0'); } catch {}
-  // Reset cache so a fresh shuffle is produced (or originals are restored).
-  _shuffledOptsCache = {};
-  // Reshuffle exam questions in-place if exam is active.
-  if (typeof examQuestions !== 'undefined' && Array.isArray(examQuestions)) {
-    // no-op: getDisplayOpts handles it lazily for renderExamQuestion
-  }
-  updateShuffleUI();
-  if (typeof rerenderCurrentViews === 'function') rerenderCurrentViews();
-  else if (typeof renderStudy === 'function') renderStudy();
-}
-
-/* ===== Repeat queue: cards marked "Again" come back sooner ===== */
-let _repeatQueue = []; // [{ num, dueAfterPick }]
-let _studyPickCounter = 0;
-function _queueRepeat(num) {
-  // Re-show after a couple of other cards so the user actually re-encounters it.
-  _repeatQueue = _repeatQueue.filter(r => r.num !== num);
-  _repeatQueue.push({ num, dueAfterPick: _studyPickCounter + 2 });
-}
-function _popRepeatReady() {
-  const idx = _repeatQueue.findIndex(r => r.dueAfterPick <= _studyPickCounter);
-  if (idx === -1) return null;
-  const item = _repeatQueue.splice(idx, 1)[0];
-  return questions.find(q => q.num === item.num) || null;
-}
 let autoCheck = (() => { try { return localStorage.getItem('networking-flashcards-autocheck-v1') === '1'; } catch { return false; } })();
 
 function toggleAutoCheck() {
@@ -2541,9 +2627,6 @@ function getDueQuestions() {
 }
 
 function pickNextStudyQ() {
-  _studyPickCounter++;
-  const fromRepeat = _popRepeatReady();
-  if (fromRepeat) return fromRepeat;
   const now = Date.now();
   const due = getDueQuestions();
   if (due.length > 0) {
@@ -2588,11 +2671,8 @@ function rateQuestion(rating) {
   saveSR();
   history.push({ t: Date.now(), num, rating });
   saveHist();
-  if (rating === 1) _queueRepeat(num);
   studyRevealed = false;
   studySelected = new Set();
-  // Force re-shuffle of options on next encounter of this card.
-  delete _shuffledOptsCache[num];
   currentStudyQ = pickNextStudyQ();
   renderStudy();
 }
@@ -3260,6 +3340,7 @@ function submitExam(timeUp = false) {
   const ss = timeTaken % 60;
 
   showExamResults(results, correct, pct, passed, mm, ss);
+  try { submitScoreToLeaderboard(correct, examQuestions.length, pct, timeTaken, (typeof learnedCards !== 'undefined' ? learnedCards.size : 0)); } catch (e) { console.warn('lb submit failed', e); }
 }
 
 function showExamResults(results, correct, pct, passed, mm, ss) {
@@ -3339,6 +3420,7 @@ function switchView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
   if (name === 'study') renderStudy();
   if (name === 'progress') renderProgress();
+  if (name === 'leaderboard') loadLeaderboard();
 }
 
 document.querySelectorAll('.nav-tab').forEach(t => {
@@ -3346,13 +3428,12 @@ document.querySelectorAll('.nav-tab').forEach(t => {
 });
 
 init();
-try { updateShuffleUI(); } catch(e) {}
 
 /* ============ THEME + LANGUAGE TOGGLE ============ */
 const I18N = {
   en: {
     headerSub: '// CLICK CARD TO REVEAL ANSWER',
-    tabBrowse: '// Browse', tabStudy: '// Study', tabProgress: '// Progress', tabExam: '// Exam',
+    tabBrowse: '// Browse', tabStudy: '// Study', tabProgress: '// Progress', tabLeaderboard: '// Leaderboard', tabExam: '// Exam',
     statTotal: 'Total:', statShown: 'Shown:', statFlipped: 'Flipped:', statLearned: 'Learned:',
     searchPh: 'Search questions...',
     secLearned: '// Learned', secLearnedHint: 'drag cards here', secToLearn: '// To Learn',
@@ -3362,14 +3443,14 @@ const I18N = {
     resetBtn: '// Reset all progress',
     examTitle: '// Exam Mode', examSub: 'Simulate the real CCNA 1 final exam',
     eicQuestions: 'Questions', eicTime: 'Time Limit', eicPass: 'Pass Score', eicTopass: 'To Pass',
-    examIntro: '60 questions are randomly selected from the question bank (incl. exam-bank variants).<br>Questions with multiple correct answers require all correct answers selected.',
+    examIntro: '60 questions are randomly selected from all 159 questions.<br>Questions with multiple correct answers require all correct answers selected.',
     examStartBtn: 'Start Exam →', examSubmit: 'Submit', examPrev: '← Prev', examNext: 'Next →',
     footer: 'Cisco CCNA / ITN v7 — Tap any card to flip · Drag the ⋮⋮ handle to move',
     themeLabel: 'Dark', themeLabelLight: 'Light'
   },
   de: {
     headerSub: '// KARTE KLICKEN, UM ANTWORT ZU ZEIGEN',
-    tabBrowse: '// Durchsuchen', tabStudy: '// Lernen', tabProgress: '// Fortschritt', tabExam: '// Prüfung',
+    tabBrowse: '// Durchsuchen', tabStudy: '// Lernen', tabProgress: '// Fortschritt', tabLeaderboard: '// Rangliste', tabExam: '// Prüfung',
     statTotal: 'Gesamt:', statShown: 'Angezeigt:', statFlipped: 'Umgedreht:', statLearned: 'Gelernt:',
     searchPh: 'Fragen suchen...',
     secLearned: '// Gelernt', secLearnedHint: 'Karten hierher ziehen', secToLearn: '// Zu lernen',
@@ -3396,8 +3477,9 @@ function applyLang() {
   if (headerP) headerP.textContent = t.headerSub;
 
   const tabs = document.querySelectorAll('.nav-tab');
-  const tabTexts = [t.tabBrowse, t.tabStudy, t.tabProgress, t.tabExam];
+  const tabTexts = [t.tabBrowse, t.tabStudy, t.tabProgress, t.tabLeaderboard, t.tabExam];
   tabs.forEach((el, i) => { if (tabTexts[i]) el.textContent = tabTexts[i]; });
+  try { updateShuffleUI(); } catch (e) {}
 
   const bs = document.querySelectorAll('#view-browse .stats .stat');
   const statLabels = [t.statTotal, t.statShown, t.statFlipped, t.statLearned];
@@ -3482,22 +3564,35 @@ function captureOriginalQuestions() {
   }));
 }
 
+function _randEmail() {
+  const rand = Math.random().toString(36).substring(2, 12);
+  return `${rand}@gmail.com`;
+}
 async function mmTranslate(text, target) {
   if (!text || !text.trim()) return text;
   const cacheKey = `tr:${target}:${text}`;
   const cached = localStorage.getItem(cacheKey);
   if (cached !== null) return cached;
-  try {
-    const src = target === 'de' ? 'en' : 'de';
-    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${target}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const out = (data && data.responseData && data.responseData.translatedText) || text;
-    localStorage.setItem(cacheKey, out);
-    return out;
-  } catch (e) {
-    return text;
+  const src = target === 'de' ? 'en' : 'de';
+  const isQuotaWarning = (s) => typeof s === 'string' && s.toUpperCase().includes('MYMEMORY WARNING');
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const email = _randEmail();
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${target}&de=${encodeURIComponent(email)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const out = (data && data.responseData && data.responseData.translatedText) || text;
+      if (isQuotaWarning(out)) {
+        // Try again with a freshly generated email
+        continue;
+      }
+      localStorage.setItem(cacheKey, out);
+      return out;
+    } catch (e) {
+      // retry
+    }
   }
+  return text;
 }
 
 async function translateArrowString(s, target) {
@@ -3555,6 +3650,41 @@ function restoreOriginalQuestions() {
   rerenderCurrentViews();
 }
 
+/* ===== Answer-shuffle toggle ===== */
+let shuffleAnswers = (() => { try { return localStorage.getItem('networking-flashcards-shuffle-v1') === '1'; } catch { return false; } })();
+let _shuffledOptsCache = {};
+function _shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function getDisplayOpts(q) {
+  if (!q || !q.opts) return (q && q.opts) || [];
+  if (!shuffleAnswers) return q.opts;
+  const key = q.num != null ? q.num : (q.q || '').slice(0, 40);
+  if (!_shuffledOptsCache[key] || _shuffledOptsCache[key].srcLen !== q.opts.length) {
+    _shuffledOptsCache[key] = { srcLen: q.opts.length, opts: _shuffleArray(q.opts) };
+  }
+  return _shuffledOptsCache[key].opts;
+}
+function updateShuffleUI() {
+  const lbl = document.getElementById('shuffle-label');
+  const btn = document.getElementById('shuffle-toggle');
+  if (lbl) lbl.textContent = (currentLang === 'de' ? 'Mischen: ' : 'Shuffle: ') + (shuffleAnswers ? (currentLang === 'de' ? 'Ein' : 'On') : (currentLang === 'de' ? 'Aus' : 'Off'));
+  if (btn) btn.classList.toggle('tc-btn-on', shuffleAnswers);
+}
+function toggleShuffleAnswers() {
+  shuffleAnswers = !shuffleAnswers;
+  try { localStorage.setItem('networking-flashcards-shuffle-v1', shuffleAnswers ? '1' : '0'); } catch {}
+  _shuffledOptsCache = {};
+  updateShuffleUI();
+  try { rerenderCurrentViews(); } catch (e) {}
+}
+try { updateShuffleUI(); } catch (e) {}
+
 function rerenderCurrentViews() {
   try { if (typeof renderAll === 'function') renderAll(); } catch (e) {}
   try { if (typeof renderStudy === 'function') renderStudy(); } catch (e) {}
@@ -3610,5 +3740,462 @@ applyTheme();
 applyLang();
 
 </script>
+
+<!-- ============ LEADERBOARD + USERNAME GATE ============ -->
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://ivxpogsleffsjmxsalxd.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml2eHBvZ3NsZWZmc2pteHNhbHhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMjQyNzgsImV4cCI6MjA5NTkwMDI3OH0.T1AmB_H612C1dYhkIif1xNAFPFt0tg9N6OkxL3JceGs';
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+  window._sb = sb;
+
+  let currentUser = localStorage.getItem('fc-username') || '';
+  let lbRows = [];
+  let lbChannel = null;
+
+  function setUserBtn() {
+    const btn = document.getElementById('user-btn');
+    const name = document.getElementById('user-name');
+    if (currentUser) {
+      btn.style.display = '';
+      name.textContent = currentUser;
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+
+  window.openUsernameGate = function () {
+    const gate = document.getElementById('username-gate');
+    const input = document.getElementById('username-input');
+    const status = document.getElementById('username-status');
+    status.textContent = '';
+    status.className = 'gate-status';
+    input.value = currentUser || '';
+    gate.style.display = 'flex';
+    setTimeout(() => input.focus(), 50);
+  };
+
+  window.submitUsername = async function () {
+    const input = document.getElementById('username-input');
+    const status = document.getElementById('username-status');
+    const btn = document.getElementById('username-submit');
+    const raw = (input.value || '').trim();
+    if (raw.length < 2 || raw.length > 24) {
+      status.textContent = 'Username must be 2–24 characters.';
+      status.className = 'gate-status error';
+      return;
+    }
+    const username = raw.replace(/\s+/g, '_');
+    btn.disabled = true;
+    status.textContent = 'Checking…';
+    status.className = 'gate-status';
+    try {
+      const { data, error } = await sb
+        .from('leaderboard')
+        .select('*')
+        .eq('username', username)
+        .maybeSingle();
+      if (error) throw error;
+      if (data) {
+        status.textContent = `Welcome back, ${username}! Best: ${Math.round(data.best_percent)}% · ${data.exam_count} exam(s).`;
+        status.className = 'gate-status found';
+      } else {
+        // Create empty row so they appear in lookups
+        const { error: insErr } = await sb.from('leaderboard').insert({ username });
+        if (insErr && insErr.code !== '23505') throw insErr;
+        status.textContent = `Welcome, ${username}! New profile created.`;
+        status.className = 'gate-status found';
+      }
+      currentUser = username;
+      localStorage.setItem('fc-username', username);
+      setUserBtn();
+      setTimeout(() => {
+        document.getElementById('username-gate').style.display = 'none';
+        btn.disabled = false;
+        // If the leaderboard view is active, refresh it
+        if (document.getElementById('view-leaderboard').classList.contains('active')) loadLeaderboard();
+      }, 700);
+    } catch (e) {
+      console.error(e);
+      status.textContent = 'Connection error. Try again.';
+      status.className = 'gate-status error';
+      btn.disabled = false;
+    }
+  };
+
+  // Allow Enter key
+  document.getElementById('username-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') window.submitUsername();
+  });
+
+  window.loadLeaderboard = async function () {
+    const el = document.getElementById('lb-content');
+    if (!el) return;
+    if (!lbRows.length) el.innerHTML = '<div class="lb-empty">Loading…</div>';
+    try {
+      const { data, error } = await sb
+        .from('leaderboard')
+        .select('*')
+        .order('best_percent', { ascending: false })
+        .order('best_score', { ascending: false })
+        .order('last_played', { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      lbRows = data || [];
+      renderLeaderboard();
+    } catch (e) {
+      el.innerHTML = '<div class="lb-empty">Could not load leaderboard.</div>';
+      console.error(e);
+    }
+  };
+
+  function renderLeaderboard(flashUser = null) {
+    const el = document.getElementById('lb-content');
+    if (!el) return;
+    if (!lbRows.length) {
+      el.innerHTML = '<div class="lb-empty">No scores yet. Be the first — finish an exam!</div>';
+      return;
+    }
+    const fmtTime = (sec) => {
+      if (!sec || sec <= 0) return '—';
+      const m = Math.floor(sec / 60), s2 = sec % 60;
+      return `${m}:${String(s2).padStart(2,'0')}`;
+    };
+    const rows = lbRows.map((r, i) => {
+      const rank = i + 1;
+      const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
+      const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+      const pct = Math.round(r.best_percent || 0);
+      const pctClass = pct >= 70 ? 'pass' : 'fail';
+      const isMe = currentUser && r.username === currentUser;
+      const flash = (flashUser && r.username === flashUser) ? ' lb-flash' : '';
+      const when = r.last_played ? new Date(r.last_played).toLocaleDateString() : '—';
+      return `<tr class="${isMe ? 'me' : ''}${flash}">
+        <td class="lb-rank ${rankClass}">${medal}</td>
+        <td>${escapeHtml(r.username)}${isMe ? ' <span style="opacity:0.6;">(you)</span>' : ''}</td>
+        <td class="lb-pct ${pctClass}">${pct}%</td>
+        <td>${r.best_score || 0}/60</td>
+        <td>${fmtTime(r.best_time)}</td>
+        <td>${r.learned_count || 0}</td>
+        <td class="lb-hide-mobile">${r.exam_count || 0}</td>
+        <td class="lb-hide-mobile">${when}</td>
+      </tr>`;
+    }).join('');
+    el.innerHTML = `
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th>Rank</th><th>User</th><th>Best %</th><th>Best</th>
+            <th>Best Time</th><th>Learned</th>
+            <th class="lb-hide-mobile">Exams</th><th class="lb-hide-mobile">Last</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  window.submitScoreToLeaderboard = async function (correct, total, pct, timeTakenSec, learnedCount) {
+    if (!currentUser) return;
+    try {
+      const { data: existing } = await sb
+        .from('leaderboard')
+        .select('*')
+        .eq('username', currentUser)
+        .maybeSingle();
+      const prevBestPct = existing?.best_percent || 0;
+      const prevBestScore = existing?.best_score || 0;
+      const newBestPct = Math.max(prevBestPct, pct);
+      const newBestScore = Math.max(prevBestScore, correct);
+      // best_time = fastest finish among runs where the user actually finished (any score)
+      const prevBestTime = existing?.best_time || 0;
+      const safeTime = Number.isFinite(timeTakenSec) && timeTakenSec > 0 ? timeTakenSec : 0;
+      const newBestTime = prevBestTime > 0 && safeTime > 0 ? Math.min(prevBestTime, safeTime) : (safeTime || prevBestTime);
+      const newLearned = Math.max(existing?.learned_count || 0, Number.isFinite(learnedCount) ? learnedCount : 0);
+      const payload = {
+        username: currentUser,
+        best_percent: newBestPct,
+        best_score: newBestScore,
+        best_time: newBestTime,
+        learned_count: newLearned,
+        exam_count: (existing?.exam_count || 0) + 1,
+        total_correct: (existing?.total_correct || 0) + correct,
+        total_questions: (existing?.total_questions || 0) + total,
+        last_played: new Date().toISOString(),
+      };
+      let { error } = await sb.from('leaderboard').upsert(payload, { onConflict: 'username' });
+      if (error && /column .* does not exist|best_time|learned_count/i.test(error.message || '')) {
+        // Graceful fallback if the optional columns aren't in the schema yet
+        delete payload.best_time;
+        delete payload.learned_count;
+        ({ error } = await sb.from('leaderboard').upsert(payload, { onConflict: 'username' }));
+      }
+      if (error) throw error;
+    } catch (e) { console.error('lb upsert', e); }
+  };
+
+  // Realtime — live updates
+  function subscribeLeaderboard() {
+    if (lbChannel) return;
+    lbChannel = sb
+      .channel('leaderboard-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'leaderboard' }, (payload) => {
+        const row = payload.new || payload.old;
+        if (!row) return;
+        // refresh + flash the affected user
+        loadLeaderboardThenFlash(row.username);
+      })
+      .subscribe();
+  }
+  async function loadLeaderboardThenFlash(user) {
+    const { data } = await sb
+      .from('leaderboard').select('*')
+      .order('best_percent', { ascending: false })
+      .order('best_score', { ascending: false })
+      .order('last_played', { ascending: false })
+      .limit(50);
+    lbRows = data || [];
+    renderLeaderboard(user);
+  }
+
+  // Boot
+  setUserBtn();
+  subscribeLeaderboard();
+  if (!currentUser) {
+    window.openUsernameGate();
+  }
+</script>
+
+<!-- ============ ADMIN PANEL ============ -->
+<style>
+  .admin-fab {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-muted); font-family: 'JetBrains Mono', monospace;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .admin-fab:hover { color: var(--accent); border-color: var(--accent); }
+  .admin-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 1rem;
+  }
+  .admin-overlay.show { display: flex; }
+  .admin-panel {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    width: 100%; max-width: 880px; max-height: 88vh; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .admin-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.2rem; border-bottom: 1px solid var(--border);
+  }
+  .admin-head h3 {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .admin-close {
+    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+    border-radius: 4px; padding: 0.3rem 0.7rem; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; cursor: pointer;
+  }
+  .admin-close:hover { color: var(--text); border-color: var(--accent2); }
+  .admin-body { padding: 1rem 1.2rem; overflow: auto; }
+  .admin-pw-row { display: flex; gap: 0.5rem; align-items: center; }
+  .admin-input {
+    background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    border-radius: 4px; padding: 0.5rem 0.7rem; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; flex: 1;
+  }
+  .admin-input:focus { outline: none; border-color: var(--accent); }
+  .admin-btn {
+    background: var(--accent); color: #0d0f14; border: none; border-radius: 4px;
+    padding: 0.5rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    font-weight: 700; cursor: pointer;
+  }
+  .admin-btn:hover { opacity: 0.85; }
+  .admin-btn.danger { background: #ff5a6e; color: #fff; }
+  .admin-btn.ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+  .admin-btn.ghost:hover { color: var(--text); border-color: var(--accent2); }
+  .admin-status { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; margin-top: 0.6rem; min-height: 1em; }
+  .admin-status.ok { color: var(--accent); }
+  .admin-status.err { color: #ff5a6e; }
+  .admin-table { width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; }
+  .admin-table th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 0.5rem 0.4rem; border-bottom: 1px solid var(--border); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .admin-table td { padding: 0.45rem 0.4rem; border-bottom: 1px solid var(--border); }
+  .admin-table input { width: 70px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 3px; padding: 0.25rem 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; }
+  .admin-table .row-actions { display: flex; gap: 0.3rem; }
+  .admin-table .ra-btn { font-size: 0.62rem; padding: 0.3rem 0.55rem; border-radius: 3px; cursor: pointer; font-family: 'JetBrains Mono', monospace; }
+  .admin-toolbar { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+</style>
+
+<button class="admin-fab" id="admin-fab" onclick="openAdmin()" title="Admin">⚙</button>
+
+<div class="admin-overlay" id="admin-overlay">
+  <div class="admin-panel">
+    <div class="admin-head">
+      <h3>// Admin · Leaderboard</h3>
+      <button class="admin-close" onclick="closeAdmin()">close</button>
+    </div>
+    <div class="admin-body" id="admin-body">
+      <div id="admin-gate">
+        <div class="admin-pw-row">
+          <input type="password" class="admin-input" id="admin-pw" placeholder="Enter admin password" autocomplete="off">
+          <button class="admin-btn" onclick="adminLogin()">Unlock</button>
+        </div>
+        <div class="admin-status err" id="admin-gate-status"></div>
+      </div>
+      <div id="admin-content" style="display:none;">
+        <div class="admin-toolbar">
+          <button class="admin-btn ghost" onclick="renderAdminTable()">↻ Refresh</button>
+          <button class="admin-btn danger" onclick="adminWipeAll()">Wipe all rows</button>
+        </div>
+        <div id="admin-table-wrap"></div>
+        <div class="admin-status" id="admin-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  const ADMIN_PW = 'CCNA1';
+  let adminUnlocked = false;
+  let adminRows = [];
+
+  function waitForSb() {
+    return new Promise((resolve) => {
+      const tick = () => window._sb ? resolve(window._sb) : setTimeout(tick, 50);
+      tick();
+    });
+  }
+
+  window.openAdmin = function () {
+    document.getElementById('admin-overlay').classList.add('show');
+    if (adminUnlocked) {
+      document.getElementById('admin-gate').style.display = 'none';
+      document.getElementById('admin-content').style.display = '';
+      renderAdminTable();
+    } else {
+      document.getElementById('admin-gate').style.display = '';
+      document.getElementById('admin-content').style.display = 'none';
+      setTimeout(() => document.getElementById('admin-pw').focus(), 60);
+    }
+  };
+  window.closeAdmin = function () {
+    document.getElementById('admin-overlay').classList.remove('show');
+  };
+  window.adminLogin = function () {
+    const v = document.getElementById('admin-pw').value;
+    const st = document.getElementById('admin-gate-status');
+    if (v === ADMIN_PW) {
+      adminUnlocked = true;
+      st.textContent = '';
+      document.getElementById('admin-gate').style.display = 'none';
+      document.getElementById('admin-content').style.display = '';
+      renderAdminTable();
+    } else {
+      st.textContent = 'Wrong password.';
+    }
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && document.getElementById('admin-overlay').classList.contains('show') && !adminUnlocked) {
+      window.adminLogin();
+    }
+    if (e.key === 'Escape' && document.getElementById('admin-overlay').classList.contains('show')) {
+      window.closeAdmin();
+    }
+  });
+
+  function fmtT(sec) {
+    if (!sec) return '';
+    const m = Math.floor(sec / 60), s = sec % 60;
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+  function escAttr(s) { return String(s).replace(/"/g, '&quot;'); }
+  function setStatus(msg, kind) {
+    const el = document.getElementById('admin-status');
+    el.textContent = msg || '';
+    el.className = 'admin-status' + (kind ? ' ' + kind : '');
+  }
+
+  window.renderAdminTable = async function () {
+    const wrap = document.getElementById('admin-table-wrap');
+    wrap.innerHTML = '<div style="color:var(--text-muted);font-family:JetBrains Mono,monospace;font-size:0.75rem;">Loading…</div>';
+    setStatus('');
+    const sb = await waitForSb();
+    const { data, error } = await sb.from('leaderboard').select('*').order('best_percent', { ascending: false });
+    if (error) {
+      wrap.innerHTML = '<div style="color:#ff5a6e;font-family:JetBrains Mono,monospace;font-size:0.75rem;">Could not load: ' + error.message + '</div>';
+      return;
+    }
+    adminRows = data || [];
+    if (!adminRows.length) {
+      wrap.innerHTML = '<div style="color:var(--text-muted);font-family:JetBrains Mono,monospace;font-size:0.75rem;">No rows.</div>';
+      return;
+    }
+    const head = '<tr><th>User</th><th>Best %</th><th>Best Score</th><th>Best Time</th><th>Learned</th><th>Exams</th><th>Actions</th></tr>';
+    const body = adminRows.map(r => `
+      <tr data-user="${escAttr(r.username)}">
+        <td>${escAttr(r.username)}</td>
+        <td><input type="number" min="0" max="100" step="1" data-field="best_percent" value="${Math.round(r.best_percent || 0)}"></td>
+        <td><input type="number" min="0" step="1" data-field="best_score" value="${r.best_score || 0}"></td>
+        <td><input type="number" min="0" step="1" data-field="best_time" value="${r.best_time || 0}" title="seconds (${fmtT(r.best_time)})"></td>
+        <td><input type="number" min="0" step="1" data-field="learned_count" value="${r.learned_count || 0}"></td>
+        <td><input type="number" min="0" step="1" data-field="exam_count" value="${r.exam_count || 0}"></td>
+        <td><div class="row-actions">
+          <button class="ra-btn admin-btn" onclick="adminSaveRow('${escAttr(r.username)}')">Save</button>
+          <button class="ra-btn admin-btn danger" onclick="adminDeleteRow('${escAttr(r.username)}')">Del</button>
+        </div></td>
+      </tr>`).join('');
+    wrap.innerHTML = `<table class="admin-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+  };
+
+  window.adminSaveRow = async function (username) {
+    const tr = document.querySelector(`#admin-table-wrap tr[data-user="${CSS.escape(username)}"]`);
+    if (!tr) return;
+    const payload = { username };
+    tr.querySelectorAll('input[data-field]').forEach(inp => {
+      const k = inp.dataset.field;
+      const v = Number(inp.value);
+      payload[k] = Number.isFinite(v) ? v : 0;
+    });
+    const sb = await waitForSb();
+    const { data, error } = await sb.from('leaderboard').update(payload).eq('username', username).select();
+    if (error) return setStatus('Update failed: ' + error.message, 'err');
+    if (!data || data.length === 0) return setStatus('Update returned 0 rows — RLS likely blocks UPDATE. See SQL note below.', 'err');
+    setStatus('Saved ' + username + '.', 'ok');
+    if (typeof window.loadLeaderboard === 'function') window.loadLeaderboard();
+  };
+
+  window.adminDeleteRow = async function (username) {
+    if (!confirm('Delete ' + username + '?')) return;
+    const sb = await waitForSb();
+    const { data, error } = await sb.from('leaderboard').delete().eq('username', username).select();
+    if (error) return setStatus('Delete failed: ' + error.message, 'err');
+    if (!data || data.length === 0) return setStatus('Delete returned 0 rows — RLS likely blocks DELETE. See SQL note below.', 'err');
+    setStatus('Deleted ' + username + '.', 'ok');
+    renderAdminTable();
+    if (typeof window.loadLeaderboard === 'function') window.loadLeaderboard();
+  };
+
+  window.adminWipeAll = async function () {
+    if (!confirm('Wipe ALL leaderboard rows? This cannot be undone.')) return;
+    const sb = await waitForSb();
+    const { data, error } = await sb.from('leaderboard').delete().neq('username', '__never__').select();
+    if (error) return setStatus('Wipe failed: ' + error.message, 'err');
+    if (!data || data.length === 0) return setStatus('Wipe returned 0 rows — RLS likely blocks DELETE. Run the SQL below in Supabase.', 'err');
+    setStatus('Wiped ' + data.length + ' row(s).', 'ok');
+    renderAdminTable();
+    if (typeof window.loadLeaderboard === 'function') window.loadLeaderboard();
+  };
+</script>
+
 </body>
 </html>
+

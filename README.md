@@ -691,11 +691,66 @@
     flex-shrink: 0;
   }
 
+  /* ===== Top-right controls ===== */
+  .top-controls {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+    display: flex;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tc-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.45rem 0.7rem;
+    font-family: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+  }
+  .tc-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tc-btn .sep { color: var(--text-muted); margin: 0 0.25rem; }
+  .tc-btn .on { color: var(--accent); font-weight: 600; }
+
+  /* ===== Light theme ===== */
+  body.light {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --surface2: #eef0f4;
+    --border: #d4d8e0;
+    --accent: #0a8f5c;
+    --accent2: #1e63d9;
+    --text: #14171f;
+    --text-muted: #5a6170;
+    --card-front: #ffffff;
+    --card-back: #e8f5ee;
+  }
+  body.light::before {
+    background-image:
+      linear-gradient(rgba(10,143,92,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,143,92,0.04) 1px, transparent 1px);
+  }
 </style>
+
+
 
 </head>
 <body>
+<div class="top-controls">
+  <button class="tc-btn" id="lang-toggle" onclick="toggleLang()" title="Sprache / Language">
+    <span id="lang-de">DE</span><span class="sep">/</span><span id="lang-en" class="on">EN</span>
+  </button>
+  <button class="tc-btn" id="theme-toggle" onclick="toggleTheme()" title="Theme">
+    <span id="theme-icon">☾</span> <span id="theme-label">Dark</span>
+  </button>
+</div>
 <div class="wrapper">
+
   <header>
     <h1>Networking <span>Flashcards</span></h1>
     <p>// CLICK CARD TO REVEAL ANSWER</p>
@@ -1092,9 +1147,14 @@ const questions = [
     num: 33,
     topic: "IPv6",
     q: "Refer to the exhibit. Host B on subnet Teachers transmits a packet to host D on subnet Students. Which Layer 2 and Layer 3 addresses are contained in the PDUs that are transmitted from host B to the router?",
-    opts: [],
-    a: ["Layer 2 destination = 00-00-0c-94-36-ab (router MAC); Layer 2 source = 00-00-0c-94-36-bb (Host B MAC); Layer 3 destination = 172.16.20.200 (Host D); Layer 3 source = 172.16.10.200 (Host B)"],
-    explain: "Crossing subnets: Layer 3 addresses remain end-to-end (B → D). Layer 2 destination is the default gateway MAC (router), source is Host B's MAC.",
+    opts: [
+      "L2 src = Host B MAC, L2 dst = Router MAC; L3 src = Host B IP, L3 dst = Host D IP",
+      "L2 src = Host B MAC, L2 dst = Host D MAC; L3 src = Host B IP, L3 dst = Host D IP",
+      "L2 src = Host B MAC, L2 dst = Router MAC; L3 src = Host B IP, L3 dst = Router IP",
+      "L2 src = Router MAC, L2 dst = Host D MAC; L3 src = Host B IP, L3 dst = Host D IP"
+    ],
+    a: ["L2 src = Host B MAC, L2 dst = Router MAC; L3 src = Host B IP, L3 dst = Host D IP"],
+    explain: "When crossing subnets, Layer 3 addresses stay end-to-end (Host B → Host D). At Layer 2, the source is Host B's MAC and the destination is the default gateway (router) MAC, because the frame only travels to the next hop.",
     img: "https://itexamanswers.net/wp-content/uploads/2020/01/i204796v11n1_204796-TOPOLOGY-ARP.png"
   },
   {
@@ -3142,6 +3202,266 @@ document.querySelectorAll('.nav-tab').forEach(t => {
 
 init();
 
+/* ============ THEME + LANGUAGE TOGGLE ============ */
+const I18N = {
+  en: {
+    headerSub: '// CLICK CARD TO REVEAL ANSWER',
+    tabBrowse: '// Browse', tabStudy: '// Study', tabProgress: '// Progress', tabExam: '// Exam',
+    statTotal: 'Total:', statShown: 'Shown:', statFlipped: 'Flipped:', statLearned: 'Learned:',
+    searchPh: 'Search questions...',
+    secLearned: '// Learned', secLearnedHint: 'drag cards here', secToLearn: '// To Learn',
+    studyDue: 'Due now:', studyToday: 'Studied today:', studyStreak: 'Streak:', autoCheck: 'Auto-check',
+    pTotal: 'Total reviews', pUnique: 'Unique questions', pGood: 'Known well', pBad: 'Need work', pStreak: 'Current streak',
+    chartDaily: 'Reviews per day (last 14 days)', chartTopics: 'Mastery by topic',
+    resetBtn: '// Reset all progress',
+    examTitle: '// Exam Mode', examSub: 'Simulate the real CCNA 1 final exam',
+    eicQuestions: 'Questions', eicTime: 'Time Limit', eicPass: 'Pass Score', eicTopass: 'To Pass',
+    examIntro: '60 questions are randomly selected from all 159 questions.<br>Questions with multiple correct answers require all correct answers selected.',
+    examStartBtn: 'Start Exam →', examSubmit: 'Submit', examPrev: '← Prev', examNext: 'Next →',
+    footer: 'Cisco CCNA / ITN v7 — Tap any card to flip · Drag the ⋮⋮ handle to move',
+    themeLabel: 'Dark', themeLabelLight: 'Light'
+  },
+  de: {
+    headerSub: '// KARTE KLICKEN, UM ANTWORT ZU ZEIGEN',
+    tabBrowse: '// Durchsuchen', tabStudy: '// Lernen', tabProgress: '// Fortschritt', tabExam: '// Prüfung',
+    statTotal: 'Gesamt:', statShown: 'Angezeigt:', statFlipped: 'Umgedreht:', statLearned: 'Gelernt:',
+    searchPh: 'Fragen suchen...',
+    secLearned: '// Gelernt', secLearnedHint: 'Karten hierher ziehen', secToLearn: '// Zu lernen',
+    studyDue: 'Fällig:', studyToday: 'Heute gelernt:', studyStreak: 'Serie:', autoCheck: 'Auto-Prüfung',
+    pTotal: 'Wiederholungen gesamt', pUnique: 'Eindeutige Fragen', pGood: 'Gut gekonnt', pBad: 'Schwächen', pStreak: 'Aktuelle Serie',
+    chartDaily: 'Wiederholungen pro Tag (letzte 14 Tage)', chartTopics: 'Beherrschung nach Thema',
+    resetBtn: '// Fortschritt zurücksetzen',
+    examTitle: '// Prüfungsmodus', examSub: 'Simuliert die echte CCNA 1 Abschlussprüfung',
+    eicQuestions: 'Fragen', eicTime: 'Zeitlimit', eicPass: 'Bestehensgrenze', eicTopass: 'Zum Bestehen',
+    examIntro: '60 Fragen werden zufällig aus allen 159 Fragen ausgewählt.<br>Bei Fragen mit mehreren richtigen Antworten müssen alle korrekten Antworten ausgewählt werden.',
+    examStartBtn: 'Prüfung starten →', examSubmit: 'Abgeben', examPrev: '← Zurück', examNext: 'Weiter →',
+    footer: 'Cisco CCNA / ITN v7 — Karte antippen zum Umdrehen · Griff ⋮⋮ zum Verschieben ziehen',
+    themeLabel: 'Dunkel', themeLabelLight: 'Hell'
+  }
+};
+
+let currentLang = localStorage.getItem('fc-lang') || 'en';
+let currentTheme = localStorage.getItem('fc-theme') || 'dark';
+
+function applyLang() {
+  const t = I18N[currentLang];
+  document.documentElement.lang = currentLang;
+  const headerP = document.querySelector('header p');
+  if (headerP) headerP.textContent = t.headerSub;
+
+  const tabs = document.querySelectorAll('.nav-tab');
+  const tabTexts = [t.tabBrowse, t.tabStudy, t.tabProgress, t.tabExam];
+  tabs.forEach((el, i) => { if (tabTexts[i]) el.textContent = tabTexts[i]; });
+
+  const bs = document.querySelectorAll('#view-browse .stats .stat');
+  const statLabels = [t.statTotal, t.statShown, t.statFlipped, t.statLearned];
+  const statIds = ['total-count','shown-count','flipped-count','learned-count'];
+  bs.forEach((el, i) => {
+    if (statLabels[i]) {
+      const v = document.getElementById(statIds[i])?.textContent || 0;
+      el.innerHTML = `${statLabels[i]} <strong id="${statIds[i]}">${v}</strong>`;
+    }
+  });
+
+  const search = document.getElementById('search');
+  if (search) search.placeholder = t.searchPh;
+
+  const secTitles = document.querySelectorAll('#view-browse .section-title');
+  if (secTitles[0]) {
+    const v = document.getElementById('learned-count-inline')?.textContent || 0;
+    secTitles[0].innerHTML = `<span>${t.secLearned} <strong id="learned-count-inline">${v}</strong></span><span class="line"></span><span style="font-size:0.65rem;">${t.secLearnedHint}</span>`;
+  }
+  if (secTitles[1]) secTitles[1].innerHTML = `<span>${t.secToLearn}</span><span class="line"></span>`;
+
+  const ss = document.querySelectorAll('#view-study .stats .stat');
+  const sLabels = [t.studyDue, t.studyToday, t.studyStreak];
+  const sIds = ['study-due','study-today','study-streak'];
+  ss.forEach((el, i) => {
+    if (sLabels[i]) {
+      const suffix = sIds[i] === 'study-streak' ? 'd' : '';
+      const v = document.getElementById(sIds[i])?.textContent || 0;
+      el.innerHTML = `${sLabels[i]} <strong id="${sIds[i]}">${v}</strong>${suffix}`;
+    }
+  });
+  const ac = document.querySelector('#auto-check-toggle span:last-child');
+  if (ac) ac.textContent = t.autoCheck;
+
+  const pLabels = document.querySelectorAll('#view-progress .progress-stat .label');
+  const pTexts = [t.pTotal, t.pUnique, t.pGood, t.pBad, t.pStreak];
+  pLabels.forEach((el, i) => { if (pTexts[i]) el.textContent = pTexts[i]; });
+  const charts = document.querySelectorAll('#view-progress .chart-card h3');
+  if (charts[0]) charts[0].textContent = t.chartDaily;
+  if (charts[1]) charts[1].textContent = t.chartTopics;
+  const resetBtn = document.querySelector('#view-progress .reset-btn');
+  if (resetBtn) resetBtn.textContent = t.resetBtn;
+
+  const examH2 = document.querySelector('#exam-start h2');
+  if (examH2) examH2.textContent = t.examTitle;
+  const examSub = document.querySelector('#exam-start .sub');
+  if (examSub) examSub.textContent = t.examSub;
+  const eic = document.querySelectorAll('#exam-start .eic-label');
+  const eicLabels = [t.eicQuestions, t.eicTime, t.eicPass, t.eicTopass];
+  eic.forEach((el, i) => { if (eicLabels[i]) el.textContent = eicLabels[i]; });
+  const introPs = document.querySelectorAll('#exam-start .exam-start-screen > p');
+  if (introPs[1]) introPs[1].innerHTML = t.examIntro;
+  const startBtn = document.querySelector('.exam-start-btn');
+  if (startBtn) startBtn.textContent = t.examStartBtn;
+  const submitBtn = document.querySelector('#exam-active button[onclick="submitExam()"]');
+  if (submitBtn) submitBtn.textContent = t.examSubmit;
+  const prev = document.getElementById('exam-prev-btn');
+  if (prev) prev.textContent = t.examPrev;
+  const next = document.getElementById('exam-next-btn');
+  if (next) next.textContent = t.examNext;
+
+  const ft = document.querySelector('footer p');
+  if (ft) ft.textContent = t.footer;
+
+  document.getElementById('lang-en').classList.toggle('on', currentLang === 'en');
+  document.getElementById('lang-de').classList.toggle('on', currentLang === 'de');
+  const themeLabel = document.getElementById('theme-label');
+  if (themeLabel) themeLabel.textContent = currentTheme === 'dark' ? t.themeLabel : t.themeLabelLight;
+}
+
+/* ===== Question translation via MyMemory API + localStorage cache ===== */
+let questionsOriginal = null;
+let translationInProgress = false;
+
+function captureOriginalQuestions() {
+  if (questionsOriginal) return;
+  questionsOriginal = questions.map(q => ({
+    q: q.q,
+    opts: [...(q.opts || [])],
+    a: [...(q.a || [])],
+    explain: q.explain
+  }));
+}
+
+async function mmTranslate(text, target) {
+  if (!text || !text.trim()) return text;
+  const cacheKey = `tr:${target}:${text}`;
+  const cached = localStorage.getItem(cacheKey);
+  if (cached !== null) return cached;
+  try {
+    const src = target === 'de' ? 'en' : 'de';
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${target}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const out = (data && data.responseData && data.responseData.translatedText) || text;
+    localStorage.setItem(cacheKey, out);
+    return out;
+  } catch (e) {
+    return text;
+  }
+}
+
+async function translateArrowString(s, target) {
+  if (!s.includes('→')) return await mmTranslate(s, target);
+  const idx = s.indexOf('→');
+  const left = s.slice(0, idx).trim();
+  const right = s.slice(idx + 1).trim();
+  const [tl, tr] = await Promise.all([mmTranslate(left, target), mmTranslate(right, target)]);
+  return `${tl} → ${tr}`;
+}
+
+function setLangBusy(busy) {
+  const btn = document.getElementById('lang-toggle');
+  if (!btn) return;
+  btn.disabled = busy;
+  btn.style.opacity = busy ? '0.5' : '1';
+  btn.style.cursor = busy ? 'wait' : 'pointer';
+}
+
+async function translateAllQuestions(target) {
+  captureOriginalQuestions();
+  setLangBusy(true);
+  // Process in small batches to avoid hammering the API
+  const batchSize = 6;
+  for (let i = 0; i < questions.length; i += batchSize) {
+    const batch = questions.slice(i, i + batchSize);
+    await Promise.all(batch.map(async (q, j) => {
+      const orig = questionsOriginal[i + j];
+      const [tq, texp, topts, ta] = await Promise.all([
+        mmTranslate(orig.q, target),
+        mmTranslate(orig.explain || '', target),
+        Promise.all((orig.opts || []).map(o => mmTranslate(o, target))),
+        Promise.all((orig.a || []).map(a => translateArrowString(a, target))),
+      ]);
+      q.q = tq;
+      q.explain = texp;
+      q.opts = topts;
+      q.a = ta;
+    }));
+    // Re-render incrementally so users see progress
+    rerenderCurrentViews();
+  }
+  setLangBusy(false);
+}
+
+function restoreOriginalQuestions() {
+  if (!questionsOriginal) return;
+  questions.forEach((q, i) => {
+    const o = questionsOriginal[i];
+    q.q = o.q;
+    q.opts = [...o.opts];
+    q.a = [...o.a];
+    q.explain = o.explain;
+  });
+  rerenderCurrentViews();
+}
+
+function rerenderCurrentViews() {
+  try { if (typeof renderAll === 'function') renderAll(); } catch (e) {}
+  try { if (typeof renderStudy === 'function') renderStudy(); } catch (e) {}
+  try {
+    if (typeof renderExamQuestion === 'function' && document.getElementById('exam-active')?.style.display !== 'none') {
+      renderExamQuestion();
+    }
+  } catch (e) {}
+}
+
+async function toggleLang() {
+  if (translationInProgress) return;
+  const newLang = currentLang === 'en' ? 'de' : 'en';
+  currentLang = newLang;
+  localStorage.setItem('fc-lang', currentLang);
+  applyLang();
+  translationInProgress = true;
+  try {
+    if (newLang === 'de') {
+      await translateAllQuestions('de');
+    } else {
+      restoreOriginalQuestions();
+    }
+  } finally {
+    translationInProgress = false;
+  }
+}
+
+// On initial load, if saved language is 'de', kick off translation
+if (currentLang === 'de') {
+  translationInProgress = true;
+  translateAllQuestions('de').finally(() => { translationInProgress = false; });
+}
+
+
+
+function applyTheme() {
+  document.body.classList.toggle('light', currentTheme === 'light');
+  const icon = document.getElementById('theme-icon');
+  if (icon) icon.textContent = currentTheme === 'dark' ? '☾' : '☀';
+  const label = document.getElementById('theme-label');
+  const t = I18N[currentLang];
+  if (label) label.textContent = currentTheme === 'dark' ? t.themeLabel : t.themeLabelLight;
+}
+
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('fc-theme', currentTheme);
+  applyTheme();
+}
+
+applyTheme();
+applyLang();
 
 </script>
 </body>

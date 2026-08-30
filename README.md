@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="utf-8" />
@@ -616,7 +616,7 @@ function renderCourse(){
   frag.appendChild(tabs);
 
   const panel = el("div",{role:"tabpanel"});
-  if(course.questions.length === 0){
+  if(course.questions.length === 0 && !(isAdmin() && state.tab === "browse")){
     panel.appendChild(el("div",{class:"card"},[renderEmptyState("🗂","Dieser Kurs enthält noch keine Karten.","")]));
   } else if(state.tab === "browse") panel.appendChild(renderBrowse(course));
   else if(state.tab === "study")    panel.appendChild(renderStudy(course));
@@ -684,8 +684,73 @@ function renderBrowseWindow(course){
   return overlay;
 }
 
+/* =====================================================================
+   ADMIN — eigene Fragen hinzufügen (nur für "Jojo")
+   ===================================================================== */
+function addCustomQuestion(courseId, question, answer){
+  const q = {
+    id: "custom-" + Date.now() + "-" + Math.random().toString(36).slice(2,7),
+    courseId, question, answer
+  };
+  data.customQuestions.push(q);
+  saveData();
+  applyCustomQuestions();
+  return q;
+}
+
+function deleteCustomQuestion(id){
+  data.customQuestions = data.customQuestions.filter(q => q.id !== id);
+  delete data.progress[id];
+  saveData();
+  applyCustomQuestions();
+}
+
+function renderAdminPanel(course){
+  const qInput = el("textarea",{rows:"2",placeholder:"Frage",style:"width:100%"});
+  const aInput = el("textarea",{rows:"4",placeholder:"Antwort",style:"width:100%"});
+  const note = el("p",{class:"small",style:"min-height:20px;margin:8px 0 0"});
+
+  const submit = () => {
+    const qv = qInput.value.trim(), av = aInput.value.trim();
+    if(!qv || !av){
+      note.style.color = "var(--error)";
+      note.textContent = "Bitte Frage und Antwort ausfüllen.";
+      return;
+    }
+    addCustomQuestion(course.id, qv, av);
+    qInput.value = ""; aInput.value = "";
+    renderApp();
+  };
+
+  const own = data.customQuestions.filter(q => q.courseId === course.id);
+  const list = el("div",{style:"margin-top:14px"});
+  own.forEach(q => {
+    list.appendChild(el("div",{class:"spread",style:"gap:8px;border-top:1px solid var(--border);padding:8px 0"},[
+      el("span",{class:"small",text:q.question}),
+      el("button",{class:"btn btn-danger small",onclick:() => {
+        if(confirm("Diese Frage wirklich löschen?")){ deleteCustomQuestion(q.id); renderApp(); }
+      }},"Löschen")
+    ]));
+  });
+
+  return el("div",{class:"card",style:"margin:0 0 18px"},[
+    el("h3",{text:"➕ Neue Frage hinzufügen"}),
+    el("p",{class:"small muted",text:`Als "${data.name}" kannst du diesem Kurs eigene Karten hinzufügen.`}),
+    el("label",{text:"Frage"}), qInput,
+    el("div",{style:"height:10px"}),
+    el("label",{text:"Antwort"}), aInput,
+    note,
+    el("div",{style:"height:12px"}),
+    el("button",{class:"btn btn-primary",onclick:submit},"Frage hinzufügen"),
+    own.length ? el("p",{class:"small muted",style:"margin:18px 0 0",text:`Eigene Fragen (${own.length})`}) : null,
+    own.length ? list : null
+  ]);
+}
+
 function renderBrowse(course){
   const frag = document.createDocumentFragment();
+
+  if(isAdmin()) frag.appendChild(renderAdminPanel(course));
 
   frag.appendChild(el("p",{class:"small muted",style:"margin:0 0 14px",
     text:"Klicke auf eine Karte, um sie in einem Fenster zu öffnen."}));
@@ -970,6 +1035,7 @@ function renderApp(){
 
 /* ============================= INIT ============================= */
 data = loadData();
+applyCustomQuestions();
 if(data.name) applyHash();
 renderApp();
 </script>

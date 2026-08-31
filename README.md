@@ -281,6 +281,50 @@ const COURSES = [
         answer:"Eine Methode, die mit einer Schleife Aufgaben erledigt." },
       { id:"pos-024", question:"Was sind gute Anwendungen von rekursiven Methoden?",
         answer:"Fakultät, Summe von Arrayelementen, Array von hinten ausgeben." }
+      { id:"pos-025", question:"Was ist die Idee bei Merge-Sort?",
+        answer:"Man teilt das Array rekursiv, gibt die zwei Hälften rekursiv weiter und setzt sie dann der Reihenfolge nach wieder zusammen." },
+
+      { id:"pos-026", question:"Was bedeutet Vererben?",
+        answer:"Wenn man Werte und Methoden aus einer anderen Klasse übernimmt (durch Ergänzen oder Implementieren)." },
+
+      { id:"pos-027", question:"Wie nennt man die Beziehung zwischen einer Oberklasse und Unterklasse?",
+        answer:"\"is-a\", z. B. Mountainbike is a Fahrrad (Mountainbike = Unterklasse/Subklasse; Fahrrad = Oberklasse/Superklasse)." },
+
+      { id:"pos-028", question:"Welche Zugriffsmodifizierer gibt es?",
+        answer:"public, protected, default (nichts angegeben), private." },
+
+      { id:"pos-029", question:"Was passiert, wenn man eine Klasse \"default\" macht?",
+        answer:"Die Klasse kann nur noch von anderen Klassen im selben Package verwendet werden." },
+
+      { id:"pos-030", question:"Was bedeutet das \"#\" in einem UML-Diagramm?",
+        answer:"Die Variable oder Methode soll protected sein." },
+
+      { id:"pos-031", question:"Was ist der Sinn von Vererbung?",
+        answer:"Vermeidung von doppeltem Code und gemeinsames Definieren von Gemeinsamkeiten von Klassen (z. B. Node bei JavaFX)." },
+
+      { id:"pos-032", question:"Was ist die Definition von Polymorphie?",
+        answer:"Dass die Subklasse einer Klasse eine Methode überschreibt. Daher kann diese Methode bei der Subklasse etwas anderes machen (z. B. toString von Object)." },
+
+      { id:"pos-033", question:"Wie kann man auf die Oberklasse bei einer Subklasse zugreifen?",
+        answer:"Mit \"super\"." },
+
+      { id:"pos-034", question:"Was sind die Attribute der Superklasse Object?",
+        answer:"Object hat keine Attribute, den Defaultkonstruktor und Defaultmethoden wie toString, equals, hashCode, clone und wait." },
+
+      { id:"pos-035", question:"Warum sollte man equals überschreiben?",
+        answer:"Wenn zwei Objekte verglichen werden (z. B. bei einer ArrayList), muss das Programm wissen, nach welchen Regeln die Objekte verglichen werden sollen." },
+
+      { id:"pos-036", question:"Was bedeutet \"overriding\"?",
+        answer:"Man überschreibt eine Methode einer Oberklasse (z. B. toString)." },
+
+      { id:"pos-037", question:"Was bedeutet \"overloading\"?",
+        answer:"Man überlädt eine Methode: In einer Klasse gibt es mehrere Methoden mit demselben Namen, aber unterschiedlicher Signatur." },
+
+      { id:"pos-038", question:"Was ist eine Methoden-Signatur?",
+        answer:"Eine Signatur ist der Weg, wie zwischen Methoden unterschieden wird. Dazu gehören Name, Anzahl der Parameter und Typ der Parameter." },
+
+      { id:"pos-039", question:"Was ist eine abstrakte Klasse?",
+        answer:"Eine Klasse, von der man kein Objekt (z. B. Fahrrad f = new Fahrrad) erstellen kann. Es fehlen meist noch Methoden, die von Subklassen definiert werden müssen. Abstrakte Klassen dienen zum Zusammenfassen von Objektgruppen." }
     ]
   }
 ];

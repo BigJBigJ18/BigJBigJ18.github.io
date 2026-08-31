@@ -280,7 +280,7 @@ const COURSES = [
       { id:"pos-023", question:"Was ist eine iterative Methode?",
         answer:"Eine Methode, die mit einer Schleife Aufgaben erledigt." },
       { id:"pos-024", question:"Was sind gute Anwendungen von rekursiven Methoden?",
-        answer:"Fakultät, Summe von Arrayelementen, Array von hinten ausgeben." }
+        answer:"Fakultät, Summe von Arrayelementen, Array von hinten ausgeben." },
       { id:"pos-025", question:"Was ist die Idee bei Merge-Sort?",
         answer:"Man teilt das Array rekursiv, gibt die zwei Hälften rekursiv weiter und setzt sie dann der Reihenfolge nach wieder zusammen." },
 

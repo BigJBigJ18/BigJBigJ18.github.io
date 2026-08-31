@@ -324,7 +324,84 @@ const COURSES = [
         answer:"Eine Signatur ist der Weg, wie zwischen Methoden unterschieden wird. Dazu gehören Name, Anzahl der Parameter und Typ der Parameter." },
 
       { id:"pos-039", question:"Was ist eine abstrakte Klasse?",
-        answer:"Eine Klasse, von der man kein Objekt (z. B. Fahrrad f = new Fahrrad) erstellen kann. Es fehlen meist noch Methoden, die von Subklassen definiert werden müssen. Abstrakte Klassen dienen zum Zusammenfassen von Objektgruppen." }
+        answer:"Eine Klasse, von der man kein Objekt (z. B. Fahrrad f = new Fahrrad) erstellen kann. Es fehlen meist noch Methoden, die von Subklassen definiert werden müssen. Abstrakte Klassen dienen zum Zusammenfassen von Objektgruppen." },
+            { id:"pos-040", question:"Was muss die Subklasse einer abstrakten Klasse beachten?",
+        answer:"Sie muss alle abstrakten Methoden der Oberklasse implementieren oder selbst abstrakt werden." },
+
+      { id:"pos-041", question:"Was ist die Definition eines Interfaces?",
+        answer:"Ein Interface ist keine Klasse, sondern eine Schnittstelle bzw. ein Vertrag. Es gibt vor, welche Methoden eine implementierende Klasse anbieten muss und definiert insbesondere Methodensignaturen." },
+
+      { id:"pos-042", question:"Was ist der Unterschied zwischen einem Interface und einer abstrakten Klasse?",
+        answer:"Eine Klasse kann mehrere Interfaces implementieren, aber nur von einer Klasse erben. Interfaces können außerdem andere Interfaces mit extends erweitern." },
+
+      { id:"pos-043", question:"Wie kann man mit LocalDate mit einem anderen Format als dem Üblichen arbeiten?",
+        answer:"Man verwendet DateTimeFormatter.ofPattern(\"yyyy.MM.dd\") oder ein ähnliches Muster und übergibt den Formatter an die entsprechende Methode." },
+
+      { id:"pos-044", question:"Was ist die Funktion von Period?",
+        answer:"Period beschreibt eine Zeitspanne zwischen zwei LocalDate-Werten. Erstellen kann man sie zum Beispiel mit Period.between(datum1, datum2)." },
+
+      { id:"pos-045", question:"Was ist eine Enum?",
+        answer:"Ein enum definiert eine feste Menge von benannten Konstanten bzw. möglichen Zuständen." },
+
+      { id:"pos-046", question:"Was ist eine Collection?",
+        answer:"Eine Collection ist ein Container bzw. eine Datenstruktur, die mehrere Objekte verwaltet. Dazu gehören unter anderem List, Set und Queue. Eine Map ist keine Collection." },
+
+      { id:"pos-047", question:"Welche Arten an Collections gibt es?",
+        answer:"List erlaubt Duplikate und ist geordnet, Set erlaubt keine Duplikate, Queue dient zur Verarbeitung von Elementen nach einem Warteschlangenprinzip und Map speichert Schlüssel-Wert-Paare. Eine Map ist keine Collection." },
+
+      { id:"pos-048", question:"Was ist das FIFO-Prinzip?",
+        answer:"FIFO bedeutet First In, First Out. Das zuerst hinzugefügte Element wird zuerst wieder entfernt. Dieses Prinzip ist typisch für Queues." },
+
+      { id:"pos-049", question:"Wozu verwendet man einen Iterator?",
+        answer:"Zum Durchlaufen von Collections. Einen Iterator erhält man beispielsweise mit liste.iterator()." },
+
+      { id:"pos-050", question:"Was ist der Vorteil eines Iterators?",
+        answer:"Man kann eine Collection sicher durchlaufen und mit iterator.remove() das zuletzt mit next() gelieferte Element während der Iteration entfernen." },
+
+      { id:"pos-051", question:"Was muss man beim serialisierten Speichern beachten?",
+        answer:"Die Klasse des zu serialisierenden Objekts muss Serializable implementieren. Auch Objekte von Feldern, die mitgespeichert werden sollen, müssen serialisierbar sein." },
+
+      { id:"pos-052", question:"Was sind die Vorteile von JUnit Tests?",
+        answer:"JUnit-Tests machen den Code leichter wartbar, helfen Bugs früh zu erkennen und können beliebig oft und schnell automatisch ausgeführt werden." },
+
+      { id:"pos-053", question:"Was ist der Nachteil von JUnit Tests?",
+        answer:"Tests müssen zusätzlich geschrieben und gewartet werden und verursachen dadurch zusätzlichen Entwicklungsaufwand." },
+
+      { id:"pos-054", question:"Was sind JUnit Tests?",
+        answer:"JUnit-Tests sind automatisierte Tests, mit denen einzelne Teile eines Java-Programms überprüft werden." },
+
+      { id:"pos-055", question:"Wie wird in JUnit getestet?",
+        answer:"Mit Assertions, zum Beispiel assertEquals(), assertTrue() oder assertFalse()." },
+
+      { id:"pos-056", question:"Was ist das Besondere an assertAll()?",
+        answer:"Mit assertAll() können mehrere Assertions ausgeführt werden, auch wenn eine davon fehlschlägt. Die Fehler werden anschließend gemeinsam gemeldet." },
+
+      { id:"pos-057", question:"Wie kann man Interfaces verwenden? Nenne 3 Varianten.",
+        answer:"1. Eine eigene Klasse implementiert das Interface. 2. Man verwendet eine anonyme Klasse. 3. Man verwendet einen Lambda-Ausdruck, sofern es sich um ein funktionales Interface handelt." },
+
+      { id:"pos-058", question:"Wie kann man bei JUnit eine Methode machen, die vor jedem Test ausgeführt wird?",
+        answer:"Mit der Annotation @BeforeEach." },
+
+      { id:"pos-059", question:"Was macht das Comparable<> Interface?",
+        answer:"Comparable definiert die natürliche Ordnung einer Klasse. Wenn eine Klasse Comparable implementiert, muss sie die Methode compareTo() implementieren. Dort wird festgelegt, wie Objekte dieser Klasse verglichen werden." },
+
+      { id:"pos-060", question:"Was sind die 3 Arten, wie man eine Liste sortieren kann?",
+        answer:"1. Comparable in der betroffenen Klasse implementieren. 2. Einen Comparator in einer separaten Klasse implementieren und beim Sortieren angeben. 3. Einen Comparator direkt beim Sortieren verwenden, zum Beispiel als Lambda oder anonyme Klasse." },
+
+      { id:"pos-061", question:"Wie kann man zwei int-Werte bei compareTo() vergleichen?",
+        answer:"Am besten mit Integer.compare(a, b). Eine Subtraktion wie a - b funktioniert zwar häufig, kann aber bei sehr großen Werten zu einem Integer Overflow führen." },
+
+      { id:"pos-062", question:"Was ist der Unterschied zwischen Byte Streams und Character Streams?",
+        answer:"Byte Streams arbeiten mit Bytes und eignen sich besonders für binäre Daten. Character Streams arbeiten mit Zeichen und berücksichtigen Zeichenkodierungen. Character Streams sind nicht einfach immer 2 Byte groß." },
+
+      { id:"pos-063", question:"Was ist der Unterschied zwischen einer Runtime Exception und einer Checked Exception?",
+        answer:"Checked Exceptions müssen vom Compiler behandelt werden, entweder mit try-catch oder throws. Runtime Exceptions erben von RuntimeException und müssen vom Compiler nicht zwingend behandelt werden." },
+
+      { id:"pos-064", question:"Wie kann man bei einem try-catch sicherstellen, dass der nachfolgende Code ausgeführt wird?",
+        answer:"Mit einem finally-Block. Dieser wird grundsätzlich ausgeführt, unabhängig davon, ob eine Exception auftritt." },
+
+      { id:"pos-065", question:"Warum gibt es Exceptions?",
+        answer:"Exceptions ermöglichen es, Fehler- und Ausnahmesituationen strukturiert zu erkennen und zu behandeln, ohne dass das Programm zwangsläufig sofort beendet werden muss." }
     ]
   }
 ];
